@@ -1,0 +1,34 @@
+.List {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow: scroll;
+  max-height: 250px;
+}
+
+.Header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* padding: 8px 0; */
+}
+
+.Title {
+  flex-basis: 45%;
+  text-align: left;
+}
+
+.Timer {
+  flex-basis: 25%;
+}
+
+.Xp {
+  flex-basis: 20%;
+  padding-right: 10px;
+  text-align: right;
+}
+
+.Actions {
+  flex-basis: 10%;
+  text-align: right;
+}

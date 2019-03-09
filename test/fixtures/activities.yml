@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  quantity: 1
+  goal_id: MyString
+  references: MyString
+  user_id: one
+  total_xp: 1
+
+two:
+  quantity: 1
+  goal_id: MyString
+  references: MyString
+  user_id: two
+  total_xp: 1

@@ -1,0 +1,34 @@
+.Form {
+  width: 100%;
+}
+
+.FormGroup {
+  display: flex;
+  align-items: center;
+}
+
+.Title {
+  flex-basis: 55%;
+}
+
+.Timer {
+  flex-basis: 25%;
+}
+
+.XpValue {
+  flex-basis: 20%;
+}
+
+.Submit {
+  height: 32px;
+  background-color: transparent;
+  border: none;
+  background-color: #162756;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  cursor: pointer;
+  text-transform: uppercase;
+}

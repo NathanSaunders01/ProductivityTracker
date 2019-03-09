@@ -1,0 +1,40 @@
+.ListItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  align-items: center;
+}
+
+.ItemTitle {
+  flex: 1;
+  text-align: left;
+}
+
+.Delete {
+  height: 16px;
+  width: 16px;
+  background: -webkit-linear-gradient(
+      -45deg,
+      transparent 0%,
+      transparent 46%,
+      #e84242 46%,
+      #e84242 56%,
+      transparent 56%,
+      transparent 100%
+    ),
+    -webkit-linear-gradient(45deg, transparent 0%, transparent 46%, #e84242 46%, #e84242
+          56%, transparent 56%, transparent 100%);
+  border: none !important;
+  cursor: pointer;
+  position: relative;
+  margin-left: 12px;
+}
+
+.Undo {
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+  color: blue;
+  padding: 0;
+  cursor: pointer;
+}

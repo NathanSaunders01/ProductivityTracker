@@ -1,0 +1,27 @@
+.BlockGroup {
+  display: flex;
+  flex-wrap: nowrap;
+  margin-bottom: 30px;
+  /* height: 600px; */
+}
+
+.Small {
+  flex: 0 0 40%;
+}
+
+.Large {
+  flex: 1 1 60%;
+}
+
+@media (max-width: 769px) {
+  .BlockGroup {
+    flex-wrap: wrap;
+    margin-bottom: 0;
+  }
+
+  .Small,
+  .Large {
+    margin-top: 30px;
+    flex: 1 1 100%;
+  }
+}

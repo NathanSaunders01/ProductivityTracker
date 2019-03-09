@@ -1,0 +1,23 @@
+.Button {
+  border-radius: 50%;
+  height: 32px;
+  width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin: 0 auto;
+  background-color: #162756;
+  font-size: 32px;
+  padding-top: 4px;
+  line-height: 0;
+  outline: none;
+  font-weight: 200;
+  font-family: "Courier New", Courier, monospace !important;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.ButtonRotated {
+  transform: rotate(-135deg);
+}

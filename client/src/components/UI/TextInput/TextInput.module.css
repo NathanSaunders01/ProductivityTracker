@@ -1,0 +1,34 @@
+.TextGroup {
+  position: relative;
+  margin-bottom: 10px;
+  width: 100%;
+  z-index: 10;
+}
+
+.TextLabel {
+  position: absolute;
+  left: 6px;
+  transform: translateY(26px);
+  font-size: 16px;
+  text-transform: capitalize;
+  z-index: -1;
+  transition: all 0.3s;
+}
+
+.TextLabelFocused {
+  transform: translateY(0);
+  font-size: 12px;
+}
+
+.TextInput {
+  width: 100%;
+  margin-top: 20px;
+  height: 30px;
+  padding: 0 6px;
+  border: none;
+  outline: none;
+  transition: all 0.3s;
+  font-size: 16px;
+  z-index: 10;
+  background-color: transparent;
+}

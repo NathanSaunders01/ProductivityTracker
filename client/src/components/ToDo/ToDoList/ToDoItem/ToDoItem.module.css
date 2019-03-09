@@ -1,0 +1,92 @@
+.ListItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  align-items: center;
+  transition: all 0.3s;
+}
+
+.Title {
+  flex-basis: 45%;
+  text-align: left;
+}
+
+.Xp {
+  flex-basis: 20%;
+  padding-right: 10px;
+  text-align: right;
+}
+
+.Actions {
+  flex-basis: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.Timer {
+  flex-basis: 25%;
+  display: flex;
+  /* border: 1px solid #e84242;
+  border-radius: 18px;
+  position: relative;
+  height: 24px;
+  box-sizing: content-box;
+  overflow: hidden; */
+}
+
+.Timer span {
+  flex-basis: 25%;
+  text-align: center;
+}
+
+.TimerBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 24px;
+  background-color: #e84242;
+  width: 50%;
+}
+
+.Delete {
+  height: 16px;
+  width: 16px;
+  background: -webkit-linear-gradient(
+      -45deg,
+      transparent 0%,
+      transparent 46%,
+      #e84242 46%,
+      #e84242 56%,
+      transparent 56%,
+      transparent 100%
+    ),
+    -webkit-linear-gradient(45deg, transparent 0%, transparent 46%, #e84242 46%, #e84242
+          56%, transparent 56%, transparent 100%);
+  border: none !important;
+  cursor: pointer;
+  position: relative;
+}
+
+.Complete {
+  display: inline-block;
+  border: none !important;
+  cursor: pointer;
+  position: relative;
+  height: 16px;
+  width: 16px;
+  background-color: transparent;
+  margin-right: 10px;
+  outline: none;
+}
+
+.Complete:after {
+  content: "";
+  display: block;
+  width: 6px;
+  height: 16px;
+  border: solid #66c148;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  margin-top: -4px;
+}
