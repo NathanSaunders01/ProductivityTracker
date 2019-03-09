@@ -29,7 +29,7 @@ module Api::V1
             updated_goals = Goal.get_weekly_activity_count_for_goals(goals)
 
             activities = user.activities.order(created_at: :desc)
-            updated_activities = Activity.get_activity_goal_name(activities)
+            updated_activities = Activity.get_activity_goal_title(activities)
 
             todos = user.goals.where("is_recurring = ? AND completed = ?", 0, false)
             updated_todos = Goal.get_time_left_for_todos(todos)

@@ -28,7 +28,7 @@ module Api::V1
                 updated_todos = Goal.get_time_left_for_todos(todos)
 
                 activities = user.activities.order(created_at: :desc)
-                updated_activities = Activity.get_activity_goal_name(activities)
+                updated_activities = Activity.get_activity_goal_title(activities)
 
                 data = {
                     user: userData,
