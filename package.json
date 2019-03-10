@@ -1,0 +1,25 @@
+{
+  "name": "goaltracker",
+  "version": "1.0.0",
+  "description": "A productivity tracker",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "build": "cd client && npm install && npm run build && cd ..",
+    "deploy": "cp -a client/build/. public/",
+    "heroku-postbuild": "npm run build && npm run deploy && echo 'Client built!'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NathanSaunders01/ProductivityTracker.git"
+  },
+  "author": "Nathan Saunders",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NathanSaunders01/ProductivityTracker/issues"
+  },
+  "homepage": "https://github.com/NathanSaunders01/ProductivityTracker#readme"
+}
