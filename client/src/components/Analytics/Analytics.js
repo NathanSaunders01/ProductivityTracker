@@ -21,9 +21,7 @@ class Analytics extends Component {
 
   async componentDidMount() {
     this._isMounted = true;
-    console.log("mounter");
     axios.post("/api/v1/get_chart_data", { period: "day" }).then(res => {
-      console.log(res);
       const { title, categories, series } = res.data;
 
       if (this._isMounted) {
@@ -43,7 +41,6 @@ class Analytics extends Component {
       this.props.activityList.length > prevProps.activityList.length &&
       prevProps.activityList.length !== 0
     ) {
-      console.log("hello there");
       // Update the last entry in array of data for
       // for the series with the same goal name as the new activity
       if (this.props.activityList.length > prevProps.activityList.length) {
@@ -67,24 +64,30 @@ class Analytics extends Component {
         );
       }
     } else if (this.props.activityList.length < prevProps.activityList.length) {
+      // Get list of all new and previous ids
       const newIds = this.props.activityList.map(activity => activity.id);
-      console.log(newIds);
       const oldIds = prevProps.activityList.map(activity => activity.id);
-      console.log(oldIds);
       let removedId, removedActivity;
+
+      // Loop through and check which ones are in both
       oldIds.map(id => {
         if (!newIds.includes(id)) removedId = id;
       });
 
-      console.log(removedId);
+      // Use ID to find remove object
       removedActivity = removedId
         ? prevProps.activityList.filter(
             activity => activity.id === removedId
           )[0]
         : null;
+
+      // Find index of data for goal with the same
+      // title as the removedActivity.goal_title
       const dataSetIndex = this.state.series.findIndex(
         data => data.name === removedActivity.goal_title
       );
+
+      // Update the value at that index to the new one
       let updatedState = this.state.series;
       updatedState[dataSetIndex].data[
         updatedState[dataSetIndex].data.length - 1

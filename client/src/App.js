@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import "./App.css";
 import { Provider } from "react-redux";
 
+import ApolloClient from "apollo-boost";
+import gql from "graphql-tag";
+
 // Redux Imports
 import { getCurrentUser } from "./actions/authActions";
 
@@ -25,6 +28,37 @@ if (token) {
   // Get user data
   store.dispatch(getCurrentUser(token));
 }
+
+const client = new ApolloClient({
+  uri: "/graphql"
+});
+
+client
+  .query({
+    query: gql`
+      {
+        users {
+          id
+          email
+          authToken
+          fullName
+          goals {
+            title
+            frequency
+            weekActivityCount
+            createdAt
+          }
+          todos {
+            id
+            timeLeft
+            completed
+            createdAt
+          }
+        }
+      }
+    `
+  })
+  .then(result => console.log(result));
 
 class App extends Component {
   handleTextChange = e => {
