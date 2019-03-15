@@ -102,6 +102,9 @@ class ToDoItem extends Component {
   render() {
     const { item, removeGoal, addActivity } = this.props;
     const { days, hours, minutes, seconds, isVisible } = this.state;
+    const crownIcon = item.bonus_available ? (
+      <img src={Crown} className={classes.Streak} />
+    ) : null;
     return (
       <li
         className={classes.ListItem}
@@ -110,7 +113,7 @@ class ToDoItem extends Component {
       >
         <span className={classes.Title}>
           {item.title}
-          <img src={Crown} className={classes.Streak} />
+          {crownIcon}
         </span>
         <div
           className={classes.Timer}

@@ -79,12 +79,14 @@ class GoalItem extends Component {
     const { item, removeGoal, addActivity } = this.props;
     const { activitiesLeft, isOverHalfWay, percentage } = this.state;
     const spanPercentage = this.getSpanPercentage();
-
+    const crownIcon = item.is_on_streak ? (
+      <img src={Crown} className={classes.Streak} />
+    ) : null;
     return (
       <li className={classes.ListItem}>
         <span className={classes.Title}>
           {item.title}
-          <img src={Crown} className={classes.Streak} />
+          {crownIcon}
         </span>
         <div className={classes.Frequency} ref={this.divWrapper}>
           <span
