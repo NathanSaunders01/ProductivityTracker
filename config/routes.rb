@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :goals
       resources :activities
+      resources :categories
       post "/get_chart_data", to: "goals#get_chart_data"
       get "/test", to: "users#test"
       post "/signup", to: "users#create"

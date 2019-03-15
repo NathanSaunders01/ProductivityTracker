@@ -1,6 +1,8 @@
 class Goal < ApplicationRecord
     belongs_to :user
     has_many :activities, dependent: :destroy
+    has_many :categorisations
+    has_many :categories, through: :categorisations
 
     validates :title, :xp_value, :is_recurring, :frequency, presence: true
     # validates :frequency, presence: true, if: -> { self.is_recurring == 1 }

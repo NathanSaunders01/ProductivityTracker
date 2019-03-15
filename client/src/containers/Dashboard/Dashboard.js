@@ -7,6 +7,7 @@ import ToDo from "../../components/ToDo/ToDo";
 import Analytics from "../../components/Analytics/Analytics";
 import Goals from "../../components/Goals/Goals";
 import Activities from "../../components/Activities/Activities";
+import Categories from "../../components/Categories/Categories";
 
 import classes from "./Dashboard.module.css";
 
@@ -36,6 +37,7 @@ class Dashboard extends Component {
         <button type="button" onClick={this.props.logoutUser}>
           LOGOUT
         </button>
+        <Categories />
         <div className={classes.BlockGroup}>
           <div className={classes.Small}>
             <ToDo />

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_06_105232) do
+ActiveRecord::Schema.define(version: 2019_03_15_162148) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,24 @@ ActiveRecord::Schema.define(version: 2019_03_06_105232) do
     t.boolean "is_todo", default: true
     t.index ["goal_id"], name: "index_activities_on_goal_id"
     t.index ["user_id"], name: "index_activities_on_user_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "title"
+    t.string "color"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_categories_on_user_id"
+  end
+
+  create_table "categorisations", force: :cascade do |t|
+    t.bigint "goal_id"
+    t.bigint "category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_categorisations_on_category_id"
+    t.index ["goal_id"], name: "index_categorisations_on_goal_id"
   end
 
   create_table "goals", force: :cascade do |t|
@@ -52,5 +70,6 @@ ActiveRecord::Schema.define(version: 2019_03_06_105232) do
 
   add_foreign_key "activities", "goals"
   add_foreign_key "activities", "users"
+  add_foreign_key "categories", "users"
   add_foreign_key "goals", "users"
 end

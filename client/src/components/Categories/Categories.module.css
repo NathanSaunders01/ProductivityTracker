@@ -1,0 +1,23 @@
+.Categories {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  z-index: 120;
+  border: 1px solid black;
+  text-align: left;
+  padding: 0 20px 20px 20px;
+  width: 360px;
+}
+
+.FormWrapper {
+  margin-top: 20px;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.Header {
+  font-weight: 400;
+  color: #162756;
+}

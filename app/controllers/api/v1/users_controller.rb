@@ -30,11 +30,14 @@ module Api::V1
                 activities = user.activities.order(created_at: :desc)
                 updated_activities = Activity.get_activity_goal_title(activities)
 
+                categories = user.categories
+
                 data = {
                     user: userData,
                     goalList: updated_goals,
                     todoList: updated_todos,
-                    activityList: updated_activities
+                    activityList: updated_activities,
+                    categoryList: categories
                 }
                 render json: data, status: :ok
             else

@@ -40,6 +40,14 @@ module Api::V1
         end
 
         def update
+            if params[:category_id]
+                category = current_user.categories.find_by(id: params[:category_id])
+                if @goal.categories.include?(category)
+                    @goal.categories.destroy(category)
+                else
+                    @goal.categories << category
+                end
+            end
             if @goal.update(goal_params)
                 render json: @goal, status: 200
             else
@@ -116,7 +124,7 @@ module Api::V1
 
         def goal_params
             params.require(:goal).permit(
-                :title, :description, :xp_value, 
+                :title, :description, :xp_value,
                 :is_recurring, :frequency, :completed
             )
         end

@@ -34,11 +34,14 @@ module Api::V1
             todos = user.goals.where("is_recurring = ? AND completed = ?", 0, false)
             updated_todos = Goal.get_additional_info_for_todos(todos)
 
+            categories = user.categories
+
             data = {
                 user: userData,
                 goalList: updated_goals,
                 todoList: updated_todos,
-                activityList: updated_activities
+                activityList: updated_activities,
+                categoryList: categories
             }
             render json: data, status: :ok
         end

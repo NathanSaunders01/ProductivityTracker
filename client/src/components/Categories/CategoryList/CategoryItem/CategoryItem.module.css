@@ -1,0 +1,39 @@
+.Category {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 0;
+  cursor: pointer;
+}
+
+.CategoryMain {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  padding: 4px 12px;
+  border-radius: 16px;
+  margin-right: 20px;
+}
+
+.Title {
+  color: white;
+}
+
+.Delete {
+  height: 16px;
+  width: 16px;
+  background: -webkit-linear-gradient(
+      -45deg,
+      transparent 0%,
+      transparent 46%,
+      #e84242 46%,
+      #e84242 56%,
+      transparent 56%,
+      transparent 100%
+    ),
+    -webkit-linear-gradient(45deg, transparent 0%, transparent 46%, #e84242 46%, #e84242
+          56%, transparent 56%, transparent 100%);
+  border: none !important;
+  cursor: pointer;
+  position: relative;
+}

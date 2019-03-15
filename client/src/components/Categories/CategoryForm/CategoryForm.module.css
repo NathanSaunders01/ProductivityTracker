@@ -1,0 +1,59 @@
+.Form {
+  width: 100%;
+}
+
+.FormGroup {
+  display: flex;
+  align-items: center;
+}
+
+.Title {
+  flex-basis: 80%;
+}
+
+.Color {
+  flex-basis: 20%;
+}
+
+.ColorWrapper {
+  padding: 5px;
+  background: #fff;
+  border-radius: 50%;
+  width: fit-content;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  margin: 8px auto 0;
+}
+
+.ColorSwatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.Popover {
+  position: absolute;
+  z-index: 2;
+}
+
+.Cover {
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+
+.Submit {
+  height: 32px;
+  background-color: transparent;
+  border: none;
+  background-color: #162756;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  cursor: pointer;
+  text-transform: uppercase;
+}
