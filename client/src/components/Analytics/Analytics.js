@@ -2,6 +2,17 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import axios from "axios";
+import {
+  startOfDay,
+  endOfDay,
+  startOfWeek,
+  endOfWeek,
+  addWeeks,
+  addDays,
+  startOfMonth,
+  endOfMonth,
+  addMonths
+} from "date-fns";
 
 import ColumnGraph from "./ColumnGraph/ColumnGraph";
 import classes from "./Analytics.module.css";
@@ -15,55 +26,99 @@ class Analytics extends Component {
       title: "",
       categories: [],
       series: [],
-      type: ""
+      type: "",
+      periodSelected: "day",
+      dataSelected: "all"
     };
   }
 
   async componentDidMount() {
     this._isMounted = true;
-    axios.post("/api/v1/get_chart_data", { period: "day" }).then(res => {
-      const { title, categories, series } = res.data;
+    axios
+      .post("/api/v1/get_chart_data", { period: "day", dataType: "all" })
+      .then(res => {
+        const { title, categories, series } = res.data;
 
-      if (this._isMounted) {
-        this.setState({
-          title: title,
-          categories: categories,
-          series: series,
-          type: "column"
-        });
-      }
-    });
+        if (this._isMounted) {
+          this.setState({
+            title: title,
+            categories: categories,
+            series: series,
+            type: "column"
+          });
+        }
+      });
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(this.props.activityList);
-    if (
-      this.props.activityList.length > prevProps.activityList.length &&
-      prevProps.activityList.length !== 0
-    ) {
-      // Update the last entry in array of data for
-      // for the series with the same goal name as the new activity
-      if (this.props.activityList.length > prevProps.activityList.length) {
-        const newActivity = this.props.activityList.reduce((prev, current) =>
-          prev.id > current.id ? prev : current
-        );
+    const { dataSelected, periodSelected } = this.state;
+    let tmpSeries = this.state.series,
+      newData = [],
+      isTodoGrouped = dataSelected === "all",
+      isTodo = false,
+      goalTitle = null;
 
-        const dataSetIndex = this.state.series.findIndex(
-          data => data.name === newActivity.goal_title
-        );
-        let updatedState = this.state.series;
-        updatedState[dataSetIndex].data[
-          updatedState[dataSetIndex].data.length - 1
-        ] += newActivity.total_xp;
+    // Check if removed or added activity
+    if (this.props.activityList.length > prevProps.activityList.length) {
+      // Find new activity
+      const newActivity = this.props.activityList.reduce((prev, current) =>
+        prev.id > current.id ? prev : current
+      );
 
-        this.setState({ type: "line" }, () =>
-          this.setState({
-            series: [...updatedState],
-            type: "column"
-          })
-        );
+      // Check whether activity is ToDo
+      if (newActivity.is_todo) {
+        isTodo = true;
+
+        // Check whether ToDos are grouped or visible
+        if (isTodoGrouped) {
+          goalTitle = "ToDos";
+        } else if (dataSelected === "todo") {
+          goalTitle = newActivity.goal_title;
+        } else if (dataSelected === "goal") return false; // If todos aren't visible, nothing to update
+      } else {
+        if (dataSelected === "todo") return false; // If goals aren't visible, nothing to update
+        goalTitle = newActivity.goal_title;
       }
+
+      // Check if add or update series
+      const dataSetIndex = this.state.series.findIndex(
+        data => data.name === goalTitle
+      );
+
+      if (dataSetIndex >= 0) {
+        // Update series data
+        tmpSeries[dataSetIndex].data[tmpSeries[dataSetIndex].data.length - 1] +=
+          newActivity.total_xp;
+      } else {
+        // Create new series data
+        if (periodSelected === "day") {
+          newData = [...Array(7)].map((_, i) =>
+            i === 6 ? newActivity.total_xp : null
+          );
+        } else if (periodSelected === "week") {
+          newData = [...Array(8)].map((_, i) =>
+            i === 7 ? newActivity.total_xp : null
+          );
+        } else {
+          newData = [...Array(6)].map((_, i) =>
+            i === 5 ? newActivity.total_xp : null
+          );
+        }
+        const newDataSet = {
+          name: goalTitle,
+          data: newData
+        };
+        tmpSeries.push(newDataSet);
+      }
+      this.setState({ type: "line", series: [] }, () =>
+        this.setState({
+          series: [...tmpSeries],
+          type: "column"
+        })
+      );
     } else if (this.props.activityList.length < prevProps.activityList.length) {
+      // Check if remove.remove  / remove.update
+
       // Get list of all new and previous ids
       const newIds = this.props.activityList.map(activity => activity.id);
       const oldIds = prevProps.activityList.map(activity => activity.id);
@@ -81,21 +136,50 @@ class Analytics extends Component {
           )[0]
         : null;
 
-      // Find index of data for goal with the same
-      // title as the removedActivity.goal_title
-      const dataSetIndex = this.state.series.findIndex(
-        data => data.name === removedActivity.goal_title
-      );
+      // Check whether activity is ToDo
+      if (removedActivity.is_todo) {
+        isTodo = true;
 
-      // Update the value at that index to the new one
-      let updatedState = this.state.series;
-      updatedState[dataSetIndex].data[
-        updatedState[dataSetIndex].data.length - 1
-      ] -= removedActivity.total_xp;
+        // Check whether ToDos are grouped or visible
+        if (isTodoGrouped) {
+          goalTitle = "ToDos";
+        } else if (dataSelected === "todo") {
+          goalTitle = removedActivity.goal_title;
+        } else if (dataSelected === "goal") return false; // If todos aren't visible, nothing to update
+      } else {
+        if (dataSelected === "todo") return false; // If goals aren't visible, nothing to update
+        goalTitle = removedActivity.goal_title;
+      }
 
-      this.setState({ type: "line" }, () =>
+      // Find data series to update
+      const dataSetIndex = tmpSeries.findIndex(data => data.name === goalTitle);
+
+      // Check whether to update or remove series
+      const newValue =
+        tmpSeries[dataSetIndex].data[tmpSeries[dataSetIndex].data.length - 1] -
+        removedActivity.total_xp;
+
+      if (newValue > 0) {
+        tmpSeries[dataSetIndex].data[
+          tmpSeries[dataSetIndex].data.length - 1
+        ] = newValue;
+      } else {
+        const total = tmpSeries[dataSetIndex].data.reduce(
+          (sum, val) => (sum += val),
+          0
+        );
+        if (total > 0) {
+          tmpSeries[dataSetIndex].data[
+            tmpSeries[dataSetIndex].data.length - 1
+          ] = null;
+        } else {
+          tmpSeries.splice(dataSetIndex, 1);
+        }
+      }
+
+      this.setState({ type: "line", series: [] }, () =>
         this.setState({
-          series: [...updatedState],
+          series: [...tmpSeries],
           type: "column"
         })
       );
@@ -106,21 +190,264 @@ class Analytics extends Component {
     this._isMounted = false;
   }
 
-  switchChartsHandler = period => {
-    if (this.state.title === `XP by ${period}`) return false;
-    axios.post("/api/v1/get_chart_data", { period: period }).then(res => {
-      console.log(res.data);
-      const { title, categories, series } = res.data;
-      this.setState({
-        title: title,
-        categories: categories,
-        series: series
-      });
+  getGoalXpByDay = (goals, dataType) => {
+    let series = [];
+    let categories = [];
+
+    // Sort all activities by created_at and sum for the period
+    goals.map((goal, index) => {
+      let i = 0;
+      let xpArray = [];
+      let hasXp = false;
+      const today = new Date();
+
+      // Loop through last 7 days
+      for (i = 0; i < 7; i++) {
+        const startDate =
+          i === 0 ? startOfDay(today) : startOfDay(addDays(today, -i));
+        const endDate = i === 0 ? today : endOfDay(addDays(today, -i));
+        let finalXp = 0;
+
+        if (index === 0) categories.push(startDate.toString().split(" ")[0]);
+
+        // Filter and sum xp_total for activities
+        const xpForPeriod = goal
+          .filter(
+            activity =>
+              new Date(activity.created_at) > startDate &&
+              new Date(activity.created_at) < endDate
+          )
+          .reduce((sum, { total_xp }) => (sum += total_xp), 0);
+
+        // Remove 0s from array and replace with null
+        if (xpForPeriod > 0) {
+          hasXp = true;
+          finalXp = xpForPeriod;
+        } else {
+          finalXp = null;
+        }
+
+        xpArray.push(finalXp);
+      }
+
+      // Create object for Chart component
+      if (hasXp) {
+        const data = {
+          name:
+            goal[0].is_todo && dataType === "all"
+              ? "ToDos"
+              : goal[0].goal_title,
+          data: xpArray.reverse()
+        };
+        series.push(data);
+      }
     });
+
+    return { series, categories };
+  };
+
+  getGoalXpByWeek = (goals, dataType) => {
+    let series = [];
+    let categories = [];
+
+    // Sort all activities by created_at and sum for the period
+    goals.map((goal, index) => {
+      let i = 0;
+      let hasXp = false;
+      let xpArray = [];
+      const today = new Date();
+
+      // Loop through last 7 days
+      for (i = 0; i < 8; i++) {
+        const startDate =
+          i === 0
+            ? startOfDay(startOfWeek(today, { weekStartsOn: 1 }))
+            : startOfDay(startOfWeek(addWeeks(today, -i), { weekStartsOn: 1 }));
+        const endDate =
+          i === 0 ? today : endOfDay(endOfWeek(addWeeks(today, -i)));
+        let finalXp = 0;
+
+        if (index === 0)
+          categories.push(`${startDate.getDate()}/${startDate.getMonth() + 1}`);
+        // Filter and sum xp_total for activities
+        const xpForPeriod = goal
+          .filter(
+            activity =>
+              new Date(activity.created_at) > startDate &&
+              new Date(activity.created_at) < endDate
+          )
+          .reduce((sum, { total_xp }) => (sum += total_xp), 0);
+
+        // Remove 0s from array and replace with null
+        if (xpForPeriod > 0) {
+          hasXp = true;
+          finalXp = xpForPeriod;
+        } else {
+          finalXp = null;
+        }
+
+        xpArray.push(finalXp);
+      }
+
+      // Create object for Chart component
+      if (hasXp) {
+        const data = {
+          name:
+            goal[0].is_todo && dataType === "all"
+              ? "ToDos"
+              : goal[0].goal_title,
+          data: xpArray.reverse()
+        };
+        series.push(data);
+      }
+    });
+
+    return { series, categories };
+  };
+
+  getGoalXpByMonth = (goals, dataType) => {
+    let series = [];
+    let categories = [];
+
+    // Sort all activities by created_at and sum for the period
+    goals.map((goal, index) => {
+      let i = 0;
+      let xpArray = [];
+      const today = new Date();
+
+      // Loop through last 7 days
+      for (i = 0; i < 6; i++) {
+        const startDate =
+          i === 0
+            ? startOfDay(startOfMonth(today))
+            : startOfDay(startOfMonth(addMonths(today, -i)));
+        const endDate =
+          i === 0 ? today : endOfDay(endOfMonth(addMonths(today, -i)));
+
+        if (index === 0)
+          categories.push(`${startDate.getDate()}/${startDate.getMonth() + 1}`);
+        // Filter and sum xp_total for activities
+        const xpForPeriod = goal
+          .filter(
+            activity =>
+              new Date(activity.created_at) > startDate &&
+              new Date(activity.created_at) < endDate
+          )
+          .reduce((sum, { total_xp }) => (sum += total_xp), 0);
+
+        // Remove 0s from array and replace with null
+        const finalXp = xpForPeriod > 0 ? xpForPeriod : null;
+        xpArray.push(finalXp);
+      }
+
+      // Create object for Chart component
+      const data = {
+        name:
+          goal[0].is_todo && dataType === "all" ? "ToDos" : goal[0].goal_title,
+        data: xpArray.reverse()
+      };
+      series.push(data);
+    });
+
+    return { series, categories };
+  };
+
+  switchChartPeriodHandler = period => {
+    if (this.state.periodSelected === period) return false;
+    const { dataSelected } = this.state;
+    axios
+      .post("/api/v1/get_chart_data", {
+        period: period,
+        dataType: dataSelected
+      })
+      .then(res => {
+        console.log(res.data);
+        const { title, categories, series } = res.data;
+        this.setState({
+          title: title,
+          categories: categories,
+          series: series,
+          periodSelected: period
+        });
+      });
+  };
+
+  switchChartDataHandler = dataType => {
+    if (dataType === this.state.dataSelected) return false;
+    const activities = this.props.activityList;
+    const { periodSelected } = this.state;
+    let goals = [],
+      series = [],
+      categories = [];
+
+    // Group all activities by Goal ID
+    const groupBy = activities.reduce((acc, curr) => {
+      if (!acc[curr.goal_id]) acc[curr.goal_id] = []; // If this type wasn't previously stored
+      acc[curr.goal_id].push(curr);
+      return acc;
+    }, {});
+
+    // Grab all goals that match param: dataType
+    switch (dataType) {
+      case "todo":
+        Object.keys(groupBy).map(key => {
+          if (groupBy[key][0].is_todo) goals.push(groupBy[key]);
+        });
+        break;
+      case "goal":
+        Object.keys(groupBy).map(key => {
+          if (!groupBy[key][0].is_todo) goals.push(groupBy[key]);
+        });
+        break;
+      case "all":
+        let todos = [];
+        Object.keys(groupBy).map(key => {
+          if (!groupBy[key][0].is_todo) {
+            goals.push(groupBy[key]);
+          } else {
+            todos.push(...groupBy[key]);
+          }
+        });
+        goals.push(todos);
+        break;
+      default:
+        break;
+    }
+
+    switch (periodSelected) {
+      case "day":
+        ({ series, categories } = this.getGoalXpByDay(goals, dataType));
+        break;
+      case "week":
+        ({ series, categories } = this.getGoalXpByWeek(goals, dataType));
+        break;
+      case "month":
+        ({ series, categories } = this.getGoalXpByMonth(goals, dataType));
+        break;
+      default:
+        ({ series, categories } = this.getGoalXpByDay(goals));
+    }
+
+    this.setState({ type: "line", series: [] }, () =>
+      this.setState({
+        type: "column",
+        categories: categories.reverse(),
+        series: series,
+        title: "XP by day",
+        dataSelected: dataType
+      })
+    );
   };
 
   render() {
-    const { title, categories, series, type } = this.state;
+    const {
+      title,
+      categories,
+      series,
+      type,
+      periodSelected,
+      dataSelected
+    } = this.state;
     return (
       <div className={classes.Container}>
         <div className={classes.Header}>
@@ -132,26 +459,68 @@ class Analytics extends Component {
             type={type}
             categories={categories}
             series={series}
+            dataType={dataSelected[0].toUpperCase() + dataSelected.slice(1)}
           />
-          <div className={classes.ChartSwitchBtns}>
+          <div className={classes.LeftChartSwitchBtns}>
             <button
               type="button"
-              className={classes.BtnSwitch}
-              onClick={() => this.switchChartsHandler("day")}
+              className={[
+                classes.BtnSwitch,
+                dataSelected === "all" ? classes.ActiveBtn : null
+              ].join(" ")}
+              onClick={() => this.switchChartDataHandler("all")}
+            >
+              All
+            </button>
+            <button
+              type="button"
+              className={[
+                classes.BtnSwitch,
+                dataSelected === "goal" ? classes.ActiveBtn : null
+              ].join(" ")}
+              onClick={() => this.switchChartDataHandler("goal")}
+            >
+              Goals
+            </button>
+            <button
+              type="button"
+              className={[
+                classes.BtnSwitch,
+                dataSelected === "todo" ? classes.ActiveBtn : null
+              ].join(" ")}
+              onClick={() => this.switchChartDataHandler("todo")}
+            >
+              ToDos
+            </button>
+          </div>
+          <div className={classes.RightChartSwitchBtns}>
+            <button
+              type="button"
+              className={[
+                classes.BtnSwitch,
+                periodSelected === "day" ? classes.ActiveBtn : null
+              ].join(" ")}
+              onClick={() => this.switchChartPeriodHandler("day")}
             >
               Daily
             </button>
             <button
               type="button"
-              className={classes.BtnSwitch}
-              onClick={() => this.switchChartsHandler("week")}
+              className={[
+                classes.BtnSwitch,
+                periodSelected === "week" ? classes.ActiveBtn : null
+              ].join(" ")}
+              onClick={() => this.switchChartPeriodHandler("week")}
             >
               Weekly
             </button>
             <button
               type="button"
-              className={classes.BtnSwitch}
-              onClick={() => this.switchChartsHandler("month")}
+              className={[
+                classes.BtnSwitch,
+                periodSelected === "month" ? classes.ActiveBtn : null
+              ].join(" ")}
+              onClick={() => this.switchChartPeriodHandler("month")}
             >
               Monthly
             </button>

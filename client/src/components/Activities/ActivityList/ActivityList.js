@@ -12,7 +12,7 @@ const activityList = ({ activityList, setRef }) => {
   return (
     <ul
       className={classes.List}
-      style={{ paddingRight: activityList.length > 7 ? "16px" : "0px" }}
+      style={{ paddingRight: activityList.length >= 7 ? "16px" : "0px" }}
     >
       {blankMessage}
       {activityItems}

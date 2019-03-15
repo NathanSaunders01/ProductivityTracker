@@ -12,7 +12,9 @@ module Api::V1
         def create
             @activity = Activity.new(activity_params)
             @activity.user_id = current_user.id
-            @activity.total_xp = @activity.goal ? @activity.goal.xp_value * @activity.quantity : 0
+            if @activity.goal
+                @activity.total_xp = @activity.goal.check_for_bonus_xp
+            end
             if @activity.save
                 goal = Goal.find(@activity.goal_id)
                 if @activity.is_todo === true

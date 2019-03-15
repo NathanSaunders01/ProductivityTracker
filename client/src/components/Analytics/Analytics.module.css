@@ -28,7 +28,16 @@
   position: relative;
 }
 
-.ChartSwitchBtns {
+.LeftChartSwitchBtns {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.RightChartSwitchBtns {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -41,8 +50,16 @@
   flex: 1;
   background-color: transparent;
   border: none;
-  text-decoration: underline;
   color: #0f2755;
   font-size: 14px;
   cursor: pointer;
+  transition: all 0.3s;
+  padding: 4px 12px;
+  outline: none;
+}
+
+.ActiveBtn {
+  background-color: #0f2755;
+  color: white;
+  border-radius: 16px;
 }

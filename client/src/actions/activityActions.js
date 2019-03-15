@@ -40,6 +40,7 @@ export const addActivity = activityData => dispatch => {
 
 export const removeActivity = activity => dispatch => {
   axios.delete(`/api/v1/activities/${activity.id}`).then(res => {
+    console.log(res.data);
     dispatch({
       type: REMOVE_ACTIVITY,
       payload: activity.id

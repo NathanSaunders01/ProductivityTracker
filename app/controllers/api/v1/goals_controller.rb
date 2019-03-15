@@ -65,12 +65,26 @@ module Api::V1
 
         def get_chart_data
             period = params[:period]
-            goals = current_user.goals.where("is_recurring = ?", 1)
-            todo_activities = current_user.activities.where("is_todo = ?", true)
-            series = Goal.sort_goal_activities_by_period(goals, period)
-            grouped_todos = Goal.get_grouped_todos_by_period(todo_activities, period)
-            series << grouped_todos
+            dataType = params[:dataType]
             categories = []
+
+            case dataType
+            when "todo"
+                goals = current_user.goals.where("is_recurring = ? AND completed = ?", 0, true)
+                series = Goal.sort_goal_activities_by_period(goals, period)
+            when "goal"
+                goals = current_user.goals.where("is_recurring = ?", 1)
+                series = Goal.sort_goal_activities_by_period(goals, period)
+            when "all"
+                goals = current_user.goals.where("is_recurring = ?", 1)
+                todo_activities = current_user.activities.where("is_todo = ?", true)
+                series = Goal.sort_goal_activities_by_period(goals, period)
+                grouped_todos = Goal.get_grouped_todos_by_period(todo_activities, period)
+                if (grouped_todos)
+                    series << grouped_todos
+                end
+            end
+
             case period
             when "day"
                 7.times { |i| categories << (DateTime.now - i.days).strftime("%a") }
@@ -88,11 +102,13 @@ module Api::V1
                 series = series
                 title = "XP by month"
             end
+
             data = {
                 title: title,
                 categories: categories,
                 series: series
             }
+
             render json: data, status: :ok
         end
 

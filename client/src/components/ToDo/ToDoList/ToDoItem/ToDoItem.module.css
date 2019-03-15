@@ -9,6 +9,14 @@
 .Title {
   flex-basis: 45%;
   text-align: left;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.Streak {
+  width: 32px;
+  margin-left: 10px;
 }
 
 .Xp {

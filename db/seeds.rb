@@ -9,28 +9,28 @@
 75.times do |a|
     day = rand(0..120)
     time = rand(6..16)
-    Activity.create!(user_id: 16, goal_id: 48, quantity: 1, total_xp: 100, is_todo: false, created_at: DateTime.now - day.days - time.hours - a.minutes)
+    Activity.create!(user_id: 16, goal_id: 58, quantity: 1, total_xp: 250, is_todo: false, created_at: DateTime.now - day.days - time.hours - a.minutes)
 end
 
 60.times do |a|
     day = rand(0..120)
     time = rand(6..16)
-    Activity.create!(user_id: 16, goal_id: 46, quantity: 1, total_xp: 120, is_todo: false, created_at: DateTime.now - day.days - time.hours - a.minutes)
+    Activity.create!(user_id: 16, goal_id: 59, quantity: 1, total_xp: 400, is_todo: false, created_at: DateTime.now - day.days - time.hours - a.minutes)
 end
 
 75.times do |a|
     day = rand(0..120)
     time = rand(6..16)
-    Activity.create!(user_id: 16, goal_id: 49, quantity: 1, total_xp: 80, is_todo: false, created_at: DateTime.now - day.days - time.hours - a.minutes)
+    Activity.create!(user_id: 16, goal_id: 60, quantity: 1, total_xp: 250, is_todo: false, created_at: DateTime.now - day.days - time.hours - a.minutes)
 end
 
-20.times do |a|
-    day = rand(0..120)
-    time = rand(6..16)
-    Activity.create!(user_id: 16, goal_id: 50, quantity: 1, total_xp: 120, is_todo: false, created_at: DateTime.now - day.days - time.hours - a.minutes)
-end
+# 20.times do |a|
+#     day = rand(0..120)
+#     time = rand(6..16)
+#     Activity.create!(user_id: 16, goal_id: 50, quantity: 1, total_xp: 120, is_todo: false, created_at: DateTime.now - day.days - time.hours - a.minutes)
+# end
 90.times do |a|
     day = rand(0..120)
     time = rand(6..16)
-    Activity.create!(user_id: 16, goal_id: 51, quantity: 1, total_xp: 200, is_todo: false, created_at: DateTime.now - day.days - time.hours - a.minutes)
+    Activity.create!(user_id: 16, goal_id: 61, quantity: 1, total_xp: 150, is_todo: false, created_at: DateTime.now - day.days - time.hours - a.minutes)
 end

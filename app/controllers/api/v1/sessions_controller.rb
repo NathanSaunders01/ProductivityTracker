@@ -26,13 +26,13 @@ module Api::V1
             userData = user.slice("first_name", "last_name", "email", "auth_token")
 
             goals = user.goals.where("is_recurring = ?", 1)
-            updated_goals = Goal.get_weekly_activity_count_for_goals(goals)
+            updated_goals = Goal.get_additional_info_for_goals(goals)
 
             activities = user.activities.order(created_at: :desc)
             updated_activities = Activity.get_activity_goal_title(activities)
 
             todos = user.goals.where("is_recurring = ? AND completed = ?", 0, false)
-            updated_todos = Goal.get_time_left_for_todos(todos)
+            updated_todos = Goal.get_additional_info_for_todos(todos)
 
             data = {
                 user: userData,

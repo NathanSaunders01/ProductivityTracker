@@ -1,26 +1,21 @@
 import React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import gradstop from "gradstop";
 
-const columnGraph = ({ title, categories, series, type }) => {
+const columnGraph = ({ title, categories, series, type, dataType }) => {
+  const gradient = gradstop({
+    stops: categories.length > 0 ? categories.length : 5,
+    inputFormat: "hex",
+    colorArray: ["#5dbcd3", "#11174b"]
+  });
   const options = {
     chart: {
       type: type
     },
-    colors: [
-      "#2f7ed8",
-      "#0d233a",
-      "#8bbc21",
-      "#910000",
-      "#1aadce",
-      "#492970",
-      "#f28f43",
-      "#77a1e5",
-      "#c42525",
-      "#a6c96a"
-    ],
+    colors: gradient,
     title: {
-      text: title
+      text: `${dataType} ${title}`
     },
     xAxis: {
       categories: categories

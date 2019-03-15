@@ -6,6 +6,7 @@ import { addActivity } from "../../../../actions/activityActions";
 import { removeGoal } from "../../../../actions/goalActions";
 
 import classes from "./GoalItem.module.css";
+import Crown from "../../../../assets/images/logo_full_crown.png";
 
 class GoalItem extends Component {
   constructor() {
@@ -81,7 +82,10 @@ class GoalItem extends Component {
 
     return (
       <li className={classes.ListItem}>
-        <span className={classes.Title}>{item.title}</span>
+        <span className={classes.Title}>
+          {item.title}
+          <img src={Crown} className={classes.Streak} />
+        </span>
         <div className={classes.Frequency} ref={this.divWrapper}>
           <span
             className={classes.FrequencyBar}

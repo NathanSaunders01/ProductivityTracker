@@ -1,5 +1,7 @@
 module Types
   class GoalType < Types::BaseObject
+    graphql_name "Goal"
+
     field :id, Integer, null: false
     field :title, String, null: true
     field :xp_value, Integer, null: true
@@ -10,9 +12,6 @@ module Types
     field :week_activity_count, Integer, null: true
     field :created_at, String, null: true
     field :updated_at, String, null: true
-    # field :updated_at, GraphQL::Types::ISO8601DateTime, null: true
-    # t.datetime "created_at", null: false
-    # t.datetime "updated_at", null: false
 
   end
 end

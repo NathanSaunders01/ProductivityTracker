@@ -16,12 +16,12 @@ module Types
 
     def goals
       goals = object.goals.where("is_recurring = ?", 1)
-      updated_goals = Goal.get_weekly_activity_count_for_goals(goals)
+      updated_goals = Goal.get_additional_info_for_goals(goals)
     end
 
     def todos
       todos = object.goals.where("is_recurring = ? AND completed = ?", 0, false)
-      updated_todos = Goal.get_time_left_for_todos(todos)
+      updated_todos = Goal.get_additional_info_for_todos(todos)
     end
 
     def activities

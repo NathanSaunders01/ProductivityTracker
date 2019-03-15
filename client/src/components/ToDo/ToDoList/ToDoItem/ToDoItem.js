@@ -6,6 +6,7 @@ import { removeGoal } from "../../../../actions/goalActions";
 import { addActivity } from "../../../../actions/activityActions";
 
 import classes from "./ToDoItem.module.css";
+import Crown from "../../../../assets/images/logo_full_crown.png";
 
 class ToDoItem extends Component {
   constructor(props) {
@@ -107,7 +108,10 @@ class ToDoItem extends Component {
         ref={this.myRef}
         style={{ opacity: isVisible ? 1 : 0 }}
       >
-        <span className={classes.Title}>{item.title}</span>
+        <span className={classes.Title}>
+          {item.title}
+          <img src={Crown} className={classes.Streak} />
+        </span>
         <div
           className={classes.Timer}
           style={{ color: days > 0 ? "black" : "red" }}
