@@ -31,13 +31,17 @@ class Dashboard extends Component {
   }
 
   render() {
+    const { displayCategories, goalToCategorise, logoutUser } = this.props;
     return (
       <div>
         <h1>Dashboard</h1>
-        <button type="button" onClick={this.props.logoutUser}>
+        <button type="button" onClick={logoutUser}>
           LOGOUT
         </button>
-        <Categories />
+        <Categories
+          displayCategories={displayCategories}
+          goal={goalToCategorise}
+        />
         <div className={classes.BlockGroup}>
           <div className={classes.Small}>
             <ToDo />
@@ -61,11 +65,15 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
   logoutUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  goalToCategorise: PropTypes.object.isRequired,
+  displayCategories: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  goalToCategorise: state.goal.goalToCategorise,
+  displayCategories: state.goal.displayCategories
 });
 
 export default connect(

@@ -33,6 +33,7 @@ module Api::V1
                 goal_data = JSON.parse(@goal.to_json)
                 goal_data["time_left"] = @goal.time_left_to_complete if @goal.is_recurring === 0
                 goal_data["week_activity_count"] = 0
+                goal_data["categories"] = []
                 render json: goal_data, status: :created
             else
                 render json: @goal.errors.full_messages, status: :unprocessable_entity
@@ -49,6 +50,10 @@ module Api::V1
                 end
             end
             if @goal.update(goal_params)
+                goal_data = JSON.parse(@goal.to_json)
+                goal_data["time_left"] = @goal.time_left_to_complete if @goal.is_recurring === 0
+                goal_data["week_activity_count"] = 0
+                goal_data["categories"] = @goal.categories.map { |cat| cat.id }
                 render json: @goal, status: 200
             else
                 render json: @goal.errors.full_messages, status: :unprocessable_entity
@@ -125,7 +130,7 @@ module Api::V1
         def goal_params
             params.require(:goal).permit(
                 :title, :description, :xp_value,
-                :is_recurring, :frequency, :completed
+                :is_recurring, :frequency, :completed, :id
             )
         end
 

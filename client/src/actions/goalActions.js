@@ -5,7 +5,9 @@ import {
   SET_GOALS,
   GET_ERRORS,
   REMOVE_GOAL,
-  REMOVE_TODO
+  REMOVE_TODO,
+  UPDATE_CATEGORY_FOR_GOAL,
+  SET_CATEGORIES_FOR_GOAL
 } from "./types";
 
 // Add a recurring goal
@@ -86,5 +88,30 @@ export const removeGoal = goal => dispatch => {
         type: GET_ERRORS,
         payload: err.response.data
       });
+    });
+};
+
+// Set categories for goal
+export const setCategoriesForGoal = goal => {
+  return {
+    type: SET_CATEGORIES_FOR_GOAL,
+    payload: goal
+  };
+};
+
+// Update category for goal
+export const updateCategoryForGoal = data => dispatch => {
+  const { goal, categoryId } = data;
+  axios
+    .patch(`/api/v1/goals/${goal.id}`, { category_id: categoryId, goal: goal })
+    .then(res => {
+      console.log(res);
+      dispatch({
+        type: UPDATE_CATEGORY_FOR_GOAL,
+        payload: categoryId
+      });
+    })
+    .catch(err => {
+      console.log(err.response);
     });
 };

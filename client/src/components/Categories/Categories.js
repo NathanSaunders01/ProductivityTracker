@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { updateCategoryForGoal } from "../../actions/goalActions";
+import { addCategory, removeCategory } from "../../actions/categoryActions";
 
 import CategoryList from "./CategoryList/CategoryList";
 import CategoryForm from "./CategoryForm/CategoryForm";
@@ -24,24 +28,26 @@ class Categories extends Component {
     };
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.categoryList > prevProps.categoryList) {
+      this.setState({
+        title: "",
+        focusedEl: null,
+        showColorPicker: false
+      });
+    }
+  }
+
   onSubmit = e => {
     e.preventDefault();
     const { title, color } = this.state;
 
-    const goalData = {
-      id: 4,
-      title,
-      color
+    const categoryData = {
+      title: title,
+      color: color
     };
 
-    this.setState(prevState => {
-      return {
-        categoryList: prevState.categoryList.concat(goalData)
-      };
-    });
-
-    // console.log(goalData);
-    // this.props.addGoal(goalData);
+    this.props.addCategory(categoryData);
   };
 
   handleTextChange = e => {
@@ -93,23 +99,32 @@ class Categories extends Component {
   };
 
   handleClickCategory = category => {
-    console.log(category);
-    if (this.state.selectedCategories.includes(category.id)) {
-      console.log("hello remove");
-      this.setState(prevState => {
-        return {
-          selectedCategories: prevState.selectedCategories.filter(
-            cat => cat !== category.id
-          )
-        };
-      });
-    } else {
-      this.setState(prevState => {
-        return {
-          selectedCategories: prevState.selectedCategories.concat(category.id)
-        };
-      });
-    }
+    const { goalToCategorise, updateCategoryForGoal } = this.props;
+
+    const data = {
+      goal: {
+        id: goalToCategorise.id
+      },
+      categoryId: category.id
+    };
+
+    updateCategoryForGoal(data);
+
+    // if (goalToCategorise.categories.includes(category.id)) {
+    //   this.setState(prevState => {
+    //     return {
+    //       selectedCategories: prevState.selectedCategories.filter(
+    //         cat => cat !== category.id
+    //       )
+    //     };
+    //   });
+    // } else {
+    //   this.setState(prevState => {
+    //     return {
+    //       selectedCategories: prevState.selectedCategories.concat(category.id)
+    //     };
+    //   });
+    // }
   };
 
   render() {
@@ -121,12 +136,27 @@ class Categories extends Component {
       selectedCategories,
       showColorPicker
     } = this.state;
+    const {
+      displayCategories,
+      goal,
+      categoryList,
+      goalToCategorise
+    } = this.props;
+    console.log(goalToCategorise);
     return (
-      <div className={classes.Categories}>
+      <div
+        className={classes.Categories}
+        style={{
+          transform: displayCategories
+            ? "translate(-50%,0)"
+            : "translate(-50%, -100vh)",
+          opacity: displayCategories ? "1" : "0"
+        }}
+      >
         <h2 className={classes.Header}>Categories</h2>
         <CategoryList
-          categoryList={this.state.categoryList}
-          selectedCategories={selectedCategories}
+          categoryList={categoryList}
+          goalToCategorise={goalToCategorise}
           clickCategory={this.handleClickCategory}
         />
         <div
@@ -156,4 +186,20 @@ class Categories extends Component {
   }
 }
 
-export default Categories;
+Categories.propTypes = {
+  addCategory: PropTypes.func.isRequired,
+  removeCategory: PropTypes.func.isRequired,
+  updateCategoryForGoal: PropTypes.func.isRequired,
+  categoryList: PropTypes.array.isRequired,
+  goalToCategorise: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  categoryList: state.category.categoryList,
+  goalToCategorise: state.goal.goalToCategorise
+});
+
+export default connect(
+  mapStateToProps,
+  { addCategory, removeCategory, updateCategoryForGoal }
+)(Categories);

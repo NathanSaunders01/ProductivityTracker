@@ -24,6 +24,7 @@ module Api::V1
                 puts goal.errors.full_messages
                 json_goal = JSON.parse(goal.to_json)
                 json_goal["week_activity_count"] = goal.count_activities_since_start_of_week
+                json_goal["categories"] = goal.categories.map { |cat| cat.id }
                 activity = JSON.parse(@activity.to_json)
                 activity["goal_title"] = @activity.goal.title
                 data = {

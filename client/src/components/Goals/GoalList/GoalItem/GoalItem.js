@@ -3,10 +3,14 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { addActivity } from "../../../../actions/activityActions";
-import { removeGoal } from "../../../../actions/goalActions";
+import {
+  removeGoal,
+  setCategoriesForGoal
+} from "../../../../actions/goalActions";
 
 import classes from "./GoalItem.module.css";
 import Crown from "../../../../assets/images/logo_full_crown.png";
+import CategoryButton from "../../../UI/CategoryButton/CategoryButton";
 
 class GoalItem extends Component {
   constructor() {
@@ -76,14 +80,24 @@ class GoalItem extends Component {
   };
 
   render() {
-    const { item, removeGoal, addActivity } = this.props;
+    const { item, removeGoal, setCategoriesForGoal, categoryList } = this.props;
     const { activitiesLeft, isOverHalfWay, percentage } = this.state;
     const spanPercentage = this.getSpanPercentage();
     const crownIcon = item.is_on_streak ? (
       <img src={Crown} className={classes.Streak} />
     ) : null;
+    const categoryColors = categoryList
+      .filter(cat => item.categories.includes(cat.id))
+      .map(cat => cat.color);
+    console.log(categoryColors);
     return (
       <li className={classes.ListItem}>
+        <CategoryButton
+          item={item}
+          sectionCount={categoryColors.length}
+          colors={categoryColors}
+          handleBtnClick={setCategoriesForGoal}
+        />
         <span className={classes.Title}>
           {item.title}
           {crownIcon}
@@ -125,11 +139,16 @@ class GoalItem extends Component {
 }
 
 GoalItem.propTypes = {
+  setCategoriesForGoal: PropTypes.func.isRequired,
   addActivity: PropTypes.func.isRequired,
   removeGoal: PropTypes.func.isRequired
 };
 
+const mapStateToProps = state => ({
+  categoryList: state.category.categoryList
+});
+
 export default connect(
-  null,
-  { addActivity, removeGoal }
+  mapStateToProps,
+  { addActivity, removeGoal, setCategoriesForGoal }
 )(GoalItem);

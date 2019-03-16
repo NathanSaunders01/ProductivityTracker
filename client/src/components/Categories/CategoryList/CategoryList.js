@@ -3,12 +3,15 @@ import React from "react";
 import CategoryItem from "./CategoryItem/CategoryItem";
 import classes from "./CategoryList.module.css";
 
-const categoryList = ({ categoryList, selectedCategories, clickCategory }) => {
+const categoryList = ({ categoryList, goalToCategorise, clickCategory }) => {
   const categoryItems = categoryList.map(category => (
     <CategoryItem
       key={category.id}
       category={category}
-      isActive={selectedCategories.includes(category.id)}
+      isActive={
+        goalToCategorise.categories &&
+        goalToCategorise.categories.includes(category.id)
+      }
       clickCategory={clickCategory}
     />
   ));

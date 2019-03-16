@@ -45,7 +45,10 @@ class Goal < ApplicationRecord
     def self.get_additional_info_for_goals(goals)
         goals_activity_count = []
         goals_is_on_streak = []
-        goals.each do |goal| 
+        goals_category_ids_array = [];
+        goals.each do |goal|
+            category_ids = goal.categories.map { |cat| cat.id }
+            goals_category_ids_array << category_ids
             goals_activity_count << goal.count_activities_since_start_of_week.to_i 
             goals_is_on_streak << goal.did_reach_frequency_last_week
         end
@@ -53,6 +56,7 @@ class Goal < ApplicationRecord
         # Create JSON object to create new attribute
         json_goals = JSON.parse(goals.to_json)
         json_goals.each_with_index do |goal, index| 
+            goal["categories"] = goals_category_ids_array[index]
             goal["week_activity_count"] = goals_activity_count[index]
             goal["is_on_streak"] = goals_is_on_streak[index] 
         end

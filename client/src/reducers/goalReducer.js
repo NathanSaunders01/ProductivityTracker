@@ -4,12 +4,16 @@ import {
   SET_GOALS,
   REMOVE_GOAL,
   REMOVE_TODO,
-  UPDATE_GOAL
+  UPDATE_GOAL,
+  UPDATE_CATEGORY_FOR_GOAL,
+  SET_CATEGORIES_FOR_GOAL
 } from "../actions/types";
 
 const initialState = {
   todoList: [],
-  goalList: []
+  goalList: [],
+  goalToCategorise: {},
+  displayCategories: false
 };
 
 export default function(state = initialState, action) {
@@ -55,6 +59,29 @@ export default function(state = initialState, action) {
       return {
         ...state,
         goalList: updatedGoals
+      };
+    case SET_CATEGORIES_FOR_GOAL:
+      return {
+        ...state,
+        goalToCategorise: action.payload,
+        displayCategories:
+          action.payload.title && action.payload.title.length > 0
+      };
+    case UPDATE_CATEGORY_FOR_GOAL:
+      const categoryId = action.payload;
+      let tempGoal = state.goalToCategorise;
+      if (state.goalToCategorise.categories.includes(categoryId)) {
+        tempGoal.categories = state.goalToCategorise.categories.filter(
+          cat => cat !== categoryId
+        );
+      } else {
+        tempGoal.categories = state.goalToCategorise.categories.concat(
+          categoryId
+        );
+      }
+      return {
+        ...state,
+        goalToCategorise: { ...tempGoal }
       };
     default:
       return state;

@@ -5,7 +5,8 @@ import {
   SET_CURRENT_USER,
   GET_ERRORS,
   SET_GOALS,
-  SET_ACTIVITIES
+  SET_ACTIVITIES,
+  SET_CATEGORIES
 } from "./types";
 
 // Register User
@@ -49,6 +50,10 @@ export const getCurrentUser = token => dispatch => {
       });
       dispatch({
         type: SET_ACTIVITIES,
+        payload: res.data
+      });
+      dispatch({
+        type: SET_CATEGORIES,
         payload: res.data
       });
     })
