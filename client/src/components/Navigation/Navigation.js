@@ -12,19 +12,27 @@ const navigation = () => {
   return (
     <nav className={classes.Nav}>
       <div className={classes.Logo}>
-        <img src={crownLogo} className={classes.LogoImg} />
+        <img
+          src={crownLogo}
+          className={classes.LogoImg}
+          alt={"Meritokracy crown logo"}
+        />
       </div>
-      <a href="#" className={classes.UserLinkWrapper}>
+      <div className={classes.UserLinkWrapper}>
         <div className={classes.User}>
           <p className={classes.UserProfileText}>
             {user.first_name} {user.last_name}
             <i className="fa fa-caret-down" />
           </p>
           <div className={classes.UserProfile}>
-            <img src={lineLogo} className={classes.LogoImg} />
+            <img
+              src={lineLogo}
+              className={classes.LogoImg}
+              alt={"User avatar"}
+            />
           </div>
         </div>
-      </a>
+      </div>
     </nav>
   );
 };

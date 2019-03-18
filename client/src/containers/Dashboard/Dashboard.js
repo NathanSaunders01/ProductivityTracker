@@ -3,11 +3,13 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { logoutUser } from "../../actions/authActions";
+import { closeCategoriesBox } from "../../actions/goalActions";
 import ToDo from "../../components/ToDo/ToDo";
 import Analytics from "../../components/Analytics/Analytics";
 import Goals from "../../components/Goals/Goals";
 import Activities from "../../components/Activities/Activities";
 import Categories from "../../components/Categories/Categories";
+import BackDrop from "../../components/UI/BackDrop/BackDrop";
 
 import classes from "./Dashboard.module.css";
 
@@ -31,9 +33,19 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { displayCategories, goalToCategorise, logoutUser } = this.props;
+    const {
+      displayCategories,
+      goalToCategorise,
+      logoutUser,
+      closeCategoriesBox
+    } = this.props;
+    let backDrop = null;
+    if (displayCategories) {
+      backDrop = <BackDrop show={true} clicked={closeCategoriesBox} />;
+    }
     return (
       <div>
+        {backDrop}
         <h1>Dashboard</h1>
         <button type="button" onClick={logoutUser}>
           LOGOUT
@@ -67,7 +79,8 @@ Dashboard.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   goalToCategorise: PropTypes.object.isRequired,
-  displayCategories: PropTypes.bool.isRequired
+  displayCategories: PropTypes.bool.isRequired,
+  closeCategoriesBox: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -78,5 +91,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser }
+  { logoutUser, closeCategoriesBox }
 )(Dashboard);

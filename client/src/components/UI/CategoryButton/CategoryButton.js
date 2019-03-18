@@ -6,7 +6,6 @@ import classes from "./CategoryButton.module.css";
 class CategoryButton extends Component {
   getColors = () => {
     const { sectionCount, colors } = this.props;
-    console.log(colors);
     switch (sectionCount) {
       case 0:
         return {
@@ -31,6 +30,10 @@ class CategoryButton extends Component {
       case 4:
         return {
           borderColor: `${colors[0]} ${colors[1]} ${colors[2]} ${colors[3]}`
+        };
+      default:
+        return {
+          backgroundColor: "transparent"
         };
     }
   };
@@ -71,10 +74,14 @@ class CategoryButton extends Component {
     return (
       <div
         onClick={() => handleBtnClick(item)}
-        className={[classes.CategoryButton, btnClass].join(" ")}
-        style={btnStyles}
+        className={classes.CategoryButtonWrapper}
       >
-        {btnFiller}
+        <div
+          className={[classes.CategoryButton, btnClass].join(" ")}
+          style={btnStyles}
+        >
+          {btnFiller}
+        </div>
       </div>
     );
   }

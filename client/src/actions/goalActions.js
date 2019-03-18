@@ -115,3 +115,11 @@ export const updateCategoryForGoal = data => dispatch => {
       console.log(err.response);
     });
 };
+
+// Close categories box for goal
+export const closeCategoriesBox = () => {
+  return {
+    type: SET_CATEGORIES_FOR_GOAL,
+    payload: {}
+  };
+};

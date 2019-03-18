@@ -25,10 +25,18 @@
   margin: 8px auto 0;
 }
 
+.ColorWrapper i {
+  font-size: 12px;
+  color: grey;
+}
+
 .ColorSwatch {
   width: 24px;
   height: 24px;
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .Popover {

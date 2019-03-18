@@ -24,7 +24,7 @@ class ToDoItem extends Component {
   }
 
   componentDidMount() {
-    const { item, removeGoal, addActivity } = this.props;
+    const { item } = this.props;
 
     let seconds = parseInt(`${item.time_left}`, 10);
     let days = Math.floor(seconds / (3600 * 24));
@@ -103,7 +103,7 @@ class ToDoItem extends Component {
     const { item, removeGoal, addActivity } = this.props;
     const { days, hours, minutes, seconds, isVisible } = this.state;
     const crownIcon = item.bonus_available ? (
-      <img src={Crown} className={classes.Streak} />
+      <img src={Crown} className={classes.Streak} alt={"Goal streak crown"} />
     ) : null;
     return (
       <li

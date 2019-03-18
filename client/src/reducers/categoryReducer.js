@@ -1,8 +1,7 @@
 import {
   ADD_CATEGORY,
   SET_CATEGORIES,
-  REMOVE_CATEGORY,
-  UPDATE_CATEGORY_FOR_GOAL
+  REMOVE_CATEGORY
 } from "../actions/types";
 
 const initialState = {

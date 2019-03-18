@@ -84,12 +84,11 @@ class GoalItem extends Component {
     const { activitiesLeft, isOverHalfWay, percentage } = this.state;
     const spanPercentage = this.getSpanPercentage();
     const crownIcon = item.is_on_streak ? (
-      <img src={Crown} className={classes.Streak} />
+      <img src={Crown} className={classes.Streak} alt={"Goal streak crown"} />
     ) : null;
     const categoryColors = categoryList
       .filter(cat => item.categories.includes(cat.id))
       .map(cat => cat.color);
-    console.log(categoryColors);
     return (
       <li className={classes.ListItem}>
         <CategoryButton

@@ -3,7 +3,12 @@ import React from "react";
 import CategoryItem from "./CategoryItem/CategoryItem";
 import classes from "./CategoryList.module.css";
 
-const categoryList = ({ categoryList, goalToCategorise, clickCategory }) => {
+const categoryList = ({
+  categoryList,
+  goalToCategorise,
+  clickCategory,
+  removeCategory
+}) => {
   const categoryItems = categoryList.map(category => (
     <CategoryItem
       key={category.id}
@@ -12,6 +17,7 @@ const categoryList = ({ categoryList, goalToCategorise, clickCategory }) => {
         goalToCategorise.categories &&
         goalToCategorise.categories.includes(category.id)
       }
+      removeCategory={removeCategory}
       clickCategory={clickCategory}
     />
   ));

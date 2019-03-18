@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import {
-  addGoal,
-  removeGoal,
-  setCategoriesForGoal
-} from "../../actions/goalActions";
+import { addGoal, removeGoal } from "../../actions/goalActions";
 
 import GoalList from "./GoalList/GoalList";
 import GoalForm from "./GoalForm/GoalForm";

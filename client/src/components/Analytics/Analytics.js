@@ -55,7 +55,6 @@ class Analytics extends Component {
     let tmpSeries = this.state.series,
       newData = [],
       isTodoGrouped = dataSelected === "all",
-      isTodo = false,
       goalTitle = null;
 
     // Check if removed or added activity
@@ -67,8 +66,6 @@ class Analytics extends Component {
 
       // Check whether activity is ToDo
       if (newActivity.is_todo) {
-        isTodo = true;
-
         // Check whether ToDos are grouped or visible
         if (isTodoGrouped) {
           goalTitle = "ToDos";
@@ -125,7 +122,7 @@ class Analytics extends Component {
       let removedId, removedActivity;
 
       // Loop through and check which ones are in both
-      oldIds.map(id => {
+      oldIds.forEach(id => {
         if (!newIds.includes(id)) removedId = id;
       });
 
@@ -138,8 +135,6 @@ class Analytics extends Component {
 
       // Check whether activity is ToDo
       if (removedActivity.is_todo) {
-        isTodo = true;
-
         // Check whether ToDos are grouped or visible
         if (isTodoGrouped) {
           goalTitle = "ToDos";
@@ -195,7 +190,7 @@ class Analytics extends Component {
     let categories = [];
 
     // Sort all activities by created_at and sum for the period
-    goals.map((goal, index) => {
+    goals.forEach((goal, index) => {
       let i = 0;
       let xpArray = [];
       let hasXp = false;
@@ -251,7 +246,7 @@ class Analytics extends Component {
     let categories = [];
 
     // Sort all activities by created_at and sum for the period
-    goals.map((goal, index) => {
+    goals.forEach((goal, index) => {
       let i = 0;
       let hasXp = false;
       let xpArray = [];
@@ -310,7 +305,7 @@ class Analytics extends Component {
     let categories = [];
 
     // Sort all activities by created_at and sum for the period
-    goals.map((goal, index) => {
+    goals.forEach((goal, index) => {
       let i = 0;
       let xpArray = [];
       const today = new Date();
@@ -390,18 +385,18 @@ class Analytics extends Component {
     // Grab all goals that match param: dataType
     switch (dataType) {
       case "todo":
-        Object.keys(groupBy).map(key => {
+        Object.keys(groupBy).forEach(key => {
           if (groupBy[key][0].is_todo) goals.push(groupBy[key]);
         });
         break;
       case "goal":
-        Object.keys(groupBy).map(key => {
+        Object.keys(groupBy).forEach(key => {
           if (!groupBy[key][0].is_todo) goals.push(groupBy[key]);
         });
         break;
       case "all":
         let todos = [];
-        Object.keys(groupBy).map(key => {
+        Object.keys(groupBy).forEach(key => {
           if (!groupBy[key][0].is_todo) {
             goals.push(groupBy[key]);
           } else {

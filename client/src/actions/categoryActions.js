@@ -1,8 +1,8 @@
 import axios from "axios";
 import {
   ADD_CATEGORY,
-  UPDATE_CATEGORY_FOR_GOAL,
-  REMOVE_CATEGORY
+  REMOVE_CATEGORY,
+  REMOVE_CATEGORY_FROM_GOALS
 } from "./types";
 
 // Add category
@@ -21,7 +21,7 @@ export const addCategory = categoryData => dispatch => {
     });
 };
 
-// Remove category
+// Remove category from list and goals
 export const removeCategory = categoryData => dispatch => {
   axios
     .delete(`/api/v1/categories/${categoryData.id}`)
@@ -29,6 +29,10 @@ export const removeCategory = categoryData => dispatch => {
       console.log(res);
       dispatch({
         type: REMOVE_CATEGORY,
+        payload: categoryData.id
+      });
+      dispatch({
+        type: REMOVE_CATEGORY_FROM_GOALS,
         payload: categoryData.id
       });
     })

@@ -21,7 +21,7 @@ class Categories extends Component {
       ],
       selectedCategories: [3],
       title: "",
-      color: "#85A3D1",
+      color: "",
       focusedEl: "",
       showForm: false,
       showColorPicker: false
@@ -33,7 +33,17 @@ class Categories extends Component {
       this.setState({
         title: "",
         focusedEl: null,
-        showColorPicker: false
+        showColorPicker: false,
+        color: ""
+      });
+    }
+    if (this.props.displayCategories && !prevProps.displayCategories) {
+      this.setState({
+        title: "",
+        focusedEl: null,
+        showForm: false,
+        showColorPicker: false,
+        color: ""
       });
     }
   }
@@ -83,10 +93,8 @@ class Categories extends Component {
   };
 
   handleColorClick = () => {
-    this.setState(prevState => {
-      return {
-        showColorPicker: true
-      };
+    this.setState({
+      showColorPicker: true
     });
   };
 
@@ -109,40 +117,15 @@ class Categories extends Component {
     };
 
     updateCategoryForGoal(data);
+  };
 
-    // if (goalToCategorise.categories.includes(category.id)) {
-    //   this.setState(prevState => {
-    //     return {
-    //       selectedCategories: prevState.selectedCategories.filter(
-    //         cat => cat !== category.id
-    //       )
-    //     };
-    //   });
-    // } else {
-    //   this.setState(prevState => {
-    //     return {
-    //       selectedCategories: prevState.selectedCategories.concat(category.id)
-    //     };
-    //   });
-    // }
+  handleRemoveCategory = category => {
+    this.props.removeCategory(category);
   };
 
   render() {
-    const {
-      title,
-      color,
-      focusedEl,
-      showForm,
-      selectedCategories,
-      showColorPicker
-    } = this.state;
-    const {
-      displayCategories,
-      goal,
-      categoryList,
-      goalToCategorise
-    } = this.props;
-    console.log(goalToCategorise);
+    const { title, color, focusedEl, showForm, showColorPicker } = this.state;
+    const { displayCategories, categoryList, goalToCategorise } = this.props;
     return (
       <div
         className={classes.Categories}
@@ -158,6 +141,7 @@ class Categories extends Component {
           categoryList={categoryList}
           goalToCategorise={goalToCategorise}
           clickCategory={this.handleClickCategory}
+          removeCategory={this.handleRemoveCategory}
         />
         <div
           className={classes.FormWrapper}

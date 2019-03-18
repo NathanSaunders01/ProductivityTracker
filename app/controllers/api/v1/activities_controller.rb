@@ -47,6 +47,7 @@ module Api::V1
                 else
                     data["week_activity_count"] = goal.count_activities_since_start_of_week
                 end
+                data["categories"] = goal.categories.map { |cat| cat.id }
                 render json: data, status: 200
             else
                 render json:  @activity.errors.full_messages, status: :unprocessable_entity

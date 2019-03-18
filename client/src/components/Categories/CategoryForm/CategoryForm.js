@@ -24,8 +24,10 @@ const categoryForm = ({
           <div className={classes.ColorWrapper} onClick={handleColorClick}>
             <div
               className={classes.ColorSwatch}
-              style={{ backgroundColor: color }}
-            />
+              style={color.length > 0 ? { backgroundColor: color } : {}}
+            >
+              {color.length === 0 ? <i className="fas fa-pen" /> : null}
+            </div>
           </div>
           {showColorPicker ? (
             <div className={classes.Popover}>
