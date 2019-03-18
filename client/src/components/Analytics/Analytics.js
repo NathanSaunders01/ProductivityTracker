@@ -65,7 +65,7 @@ class Analytics extends Component {
       .post("/api/v1/get_chart_data", { period: "day", dataType: "all" })
       .then(res => {
         const { title, categories, series } = res.data;
-
+        console.log(res.data);
         if (this._isMounted) {
           this.setState({
             title: title,
@@ -85,22 +85,25 @@ class Analytics extends Component {
       goalTitle = null;
 
     // Check if removed or added activity
-    if (this.props.activityList.length > prevProps.activityList.length) {
+    if (
+      this.props.activityList.length > prevProps.activityList.length &&
+      prevProps.activityList.length !== 0
+    ) {
       // Find new activity
       const newActivity = this.props.activityList.reduce((prev, current) =>
         prev.id > current.id ? prev : current
       );
-
+      console.log(newActivity);
       // Check whether activity is ToDo
       if (newActivity.is_todo) {
         // Check whether ToDos are grouped or visible
         if (isTodoGrouped) {
           goalTitle = "ToDos";
-        } else if (dataSelected === "todo") {
+        } else if (dataSelected === "to-do") {
           goalTitle = newActivity.goal_title;
         } else if (dataSelected === "goal") return false; // If todos aren't visible, nothing to update
       } else {
-        if (dataSelected === "todo") return false; // If goals aren't visible, nothing to update
+        if (dataSelected === "to-do") return false; // If goals aren't visible, nothing to update
         goalTitle = newActivity.goal_title;
       }
 
@@ -140,6 +143,42 @@ class Analytics extends Component {
           type: "column"
         })
       );
+    } else if (
+      prevProps.activityList.length === 0 &&
+      this.props.activityList.length === 1
+    ) {
+      const newActivity = this.props.activityList[0];
+
+      if (newActivity.is_todo) {
+        // Check whether ToDos are grouped or visible
+        if (isTodoGrouped) {
+          goalTitle = "ToDos";
+        } else if (dataSelected === "to-do") {
+          goalTitle = newActivity.goal_title;
+        } else if (dataSelected === "goal") return false; // If todos aren't visible, nothing to update
+      } else {
+        if (dataSelected === "to-do") return false; // If goals aren't visible, nothing to update
+        goalTitle = newActivity.goal_title;
+      }
+
+      if (periodSelected === "day") {
+        newData = [...Array(7)].map((_, i) =>
+          i === 6 ? newActivity.total_xp : null
+        );
+      } else if (periodSelected === "week") {
+        newData = [...Array(8)].map((_, i) =>
+          i === 7 ? newActivity.total_xp : null
+        );
+      } else {
+        newData = [...Array(6)].map((_, i) =>
+          i === 5 ? newActivity.total_xp : null
+        );
+      }
+      const newDataSet = {
+        name: goalTitle,
+        data: newData
+      };
+      tmpSeries.push(newDataSet);
     } else if (this.props.activityList.length < prevProps.activityList.length) {
       // Check if remove.remove  / remove.update
 
@@ -165,11 +204,11 @@ class Analytics extends Component {
         // Check whether ToDos are grouped or visible
         if (isTodoGrouped) {
           goalTitle = "ToDos";
-        } else if (dataSelected === "todo") {
+        } else if (dataSelected === "to-do") {
           goalTitle = removedActivity.goal_title;
         } else if (dataSelected === "goal") return false; // If todos aren't visible, nothing to update
       } else {
-        if (dataSelected === "todo") return false; // If goals aren't visible, nothing to update
+        if (dataSelected === "to-do") return false; // If goals aren't visible, nothing to update
         goalTitle = removedActivity.goal_title;
       }
 
@@ -334,6 +373,7 @@ class Analytics extends Component {
     // Sort all activities by created_at and sum for the period
     goals.forEach((goal, index) => {
       let i = 0;
+      let hasXp = false;
       let xpArray = [];
       const today = new Date();
 
@@ -345,6 +385,7 @@ class Analytics extends Component {
             : startOfDay(startOfMonth(addMonths(today, -i)));
         const endDate =
           i === 0 ? today : endOfDay(endOfMonth(addMonths(today, -i)));
+        let finalXp = 0;
 
         if (index === 0)
           categories.push(`${startDate.getDate()}/${startDate.getMonth() + 1}`);
@@ -358,17 +399,27 @@ class Analytics extends Component {
           .reduce((sum, { total_xp }) => (sum += total_xp), 0);
 
         // Remove 0s from array and replace with null
-        const finalXp = xpForPeriod > 0 ? xpForPeriod : null;
+        if (xpForPeriod > 0) {
+          hasXp = true;
+          finalXp = xpForPeriod;
+        } else {
+          finalXp = null;
+        }
+
         xpArray.push(finalXp);
       }
 
       // Create object for Chart component
-      const data = {
-        name:
-          goal[0].is_todo && dataType === "all" ? "ToDos" : goal[0].goal_title,
-        data: xpArray.reverse()
-      };
-      series.push(data);
+      if (hasXp) {
+        const data = {
+          name:
+            goal[0].is_todo && dataType === "all"
+              ? "ToDos"
+              : goal[0].goal_title,
+          data: xpArray.reverse()
+        };
+        series.push(data);
+      }
     });
 
     return { series, categories };
@@ -514,6 +565,7 @@ class Analytics extends Component {
           prevState => {
             return {
               ...prevState,
+              displayMenu: false,
               dataSelected: updatedOption.subOptions.filter(
                 opt => opt.isActive
               )[0].meta,
@@ -537,6 +589,7 @@ class Analytics extends Component {
           prevState => {
             return {
               ...prevState,
+              displayMenu: false,
               periodSelected: updatedOption.subOptions.filter(
                 opt => opt.isActive
               )[0].meta,

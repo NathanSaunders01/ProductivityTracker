@@ -71,7 +71,7 @@ class Goal < ApplicationRecord
             7.times do |index|
                 # Get start and end date
                 start_date = (DateTime.now - index.days).beginning_of_day
-                end_date = index === 0 ? DateTime.now : (DateTime.now - (index-1).days).beginning_of_day
+                end_date = index === 0 ? DateTime.now : (DateTime.now - index.days).end_of_day
                 
                 # Get all activities during this period
                 activities = todos.where("created_at > ? AND created_at < ?", start_date, end_date)
