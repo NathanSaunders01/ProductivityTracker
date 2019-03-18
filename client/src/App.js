@@ -7,7 +7,11 @@ import ApolloClient from "apollo-boost";
 import gql from "graphql-tag";
 
 // Redux Imports
-import { getCurrentUser } from "./actions/authActions";
+import {
+  getCurrentUser,
+  loadCurrentUser,
+  setCurrentUser
+} from "./actions/authActions";
 
 // Utility Imports
 import Auth from "./utils/Auth";
@@ -19,6 +23,8 @@ import Landing from "./containers/Landing/Landing";
 import Dashboard from "./containers/Dashboard/Dashboard";
 import Navigation from "./components/Navigation/Navigation";
 
+store.dispatch(loadCurrentUser());
+
 const token = Auth.getToken();
 // Check for token
 if (token) {
@@ -27,6 +33,8 @@ if (token) {
 
   // Get user data
   store.dispatch(getCurrentUser(token));
+} else {
+  store.dispatch(setCurrentUser({}));
 }
 
 const client = new ApolloClient({
@@ -61,14 +69,6 @@ client
   .then(result => console.log(result));
 
 class App extends Component {
-  handleTextChange = e => {
-    const name = e.target.name;
-    const val = e.target.value;
-    this.setState({
-      [name]: val
-    });
-  };
-
   render() {
     return (
       <Provider store={store}>

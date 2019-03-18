@@ -2,6 +2,7 @@ import axios from "axios";
 import Auth from "../utils/Auth";
 import setAuthToken from "../utils/setAuthToken";
 import {
+  LOAD_CURRENT_USER,
   SET_CURRENT_USER,
   GET_ERRORS,
   SET_GOALS,
@@ -33,6 +34,13 @@ export const registerUser = userData => dispatch => {
         payload: err.response.data
       });
     });
+};
+
+export const loadCurrentUser = () => {
+  return {
+    type: LOAD_CURRENT_USER,
+    payload: {}
+  };
 };
 
 export const getCurrentUser = token => dispatch => {
@@ -100,6 +108,11 @@ export const loginUser = userData => dispatch => {
         type: SET_ACTIVITIES,
         payload: res.data
       });
+      // Set user's categories
+      dispatch({
+        type: SET_CATEGORIES,
+        payload: res.data
+      });
     })
     .catch(err =>
       dispatch({
@@ -124,6 +137,14 @@ export const logoutUser = () => dispatch => {
       dispatch({
         type: SET_GOALS,
         payload: { goalList: [], todoList: [] }
+      });
+      dispatch({
+        type: SET_CATEGORIES,
+        payload: { categoryList: [] }
+      });
+      dispatch({
+        type: SET_ACTIVITIES,
+        payload: { activityList: [] }
       });
     })
     .catch(err =>

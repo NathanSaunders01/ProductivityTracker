@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-
 import { logoutUser } from "../../actions/authActions";
 
 import Register from "../../components/Auth/Register/Register";
 import Login from "../../components/Auth/Login/Login";
+import Spinner from "../../components/UI/Spinner/Spinner";
+
+import classes from "./Landing.module.css";
 
 class Landing extends Component {
   componentDidUpdate() {
@@ -19,29 +21,20 @@ class Landing extends Component {
   };
 
   render() {
-    let name = "there";
-    let controls = null;
-    if (this.props.auth.isAuthenticated) {
-      name = this.props.auth.user.first_name;
-      controls = (
-        <button type="button" onClick={this.logoutHandler}>
-          Logout
-        </button>
-      );
-    } else {
-      controls = (
+    let content = (
+      <div className={classes.LoadingContainer}>
+        <Spinner />
+      </div>
+    );
+    if (!this.props.auth.isLoading) {
+      content = (
         <div>
           <Register />
           <Login />
         </div>
       );
     }
-    return (
-      <div>
-        <h1>Hello {name}</h1>
-        {controls}
-      </div>
-    );
+    return <div style={{}}>{content}</div>;
   }
 }
 

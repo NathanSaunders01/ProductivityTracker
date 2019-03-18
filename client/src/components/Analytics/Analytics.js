@@ -15,6 +15,7 @@ import {
 } from "date-fns";
 
 import ColumnGraph from "./ColumnGraph/ColumnGraph";
+import GraphButton from "../UI/GraphSettings/GraphButton";
 import classes from "./Analytics.module.css";
 
 class Analytics extends Component {
@@ -28,7 +29,33 @@ class Analytics extends Component {
       series: [],
       type: "",
       periodSelected: "day",
-      dataSelected: "all"
+      dataSelected: "all",
+      displayMenu: false,
+      options: [
+        {
+          id: 1,
+          title: "Data",
+          meta: "data",
+          isActive: false,
+          subOptions: [
+            { id: 1, title: "All", meta: "all", isActive: true },
+            { id: 2, title: "Goals", meta: "goal", isActive: false },
+            { id: 3, title: "To-Dos", meta: "to-do", isActive: false },
+            { id: 4, title: "Categories", meta: "category", isActive: false }
+          ]
+        },
+        {
+          id: 2,
+          title: "Period",
+          meta: "period",
+          isActive: false,
+          subOptions: [
+            { id: 1, title: "Daily", meta: "day", isActive: true },
+            { id: 2, title: "Weekly", meta: "week", isActive: false },
+            { id: 3, title: "Monthly", meta: "month", isActive: false }
+          ]
+        }
+      ]
     };
   }
 
@@ -367,10 +394,11 @@ class Analytics extends Component {
       });
   };
 
-  switchChartDataHandler = dataType => {
-    if (dataType === this.state.dataSelected) return false;
+  switchChartDataHandler = () => {
+    // if (dataType === this.state.dataSelected) return false;
     const activities = this.props.activityList;
     const { periodSelected } = this.state;
+    const dataType = this.state.dataSelected;
     let goals = [],
       series = [],
       categories = [];
@@ -384,7 +412,7 @@ class Analytics extends Component {
 
     // Grab all goals that match param: dataType
     switch (dataType) {
-      case "todo":
+      case "to-do":
         Object.keys(groupBy).forEach(key => {
           if (groupBy[key][0].is_todo) goals.push(groupBy[key]);
         });
@@ -428,10 +456,108 @@ class Analytics extends Component {
         type: "column",
         categories: categories.reverse(),
         series: series,
-        title: "XP by day",
         dataSelected: dataType
       })
     );
+  };
+
+  handleSwitchGraphMenu = () => {
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        displayMenu: !prevState.displayMenu,
+        options: prevState.displayMenu
+          ? prevState.options
+          : prevState.options.map(opt => {
+              return {
+                ...opt,
+                isActive: false
+              };
+            })
+      };
+    });
+  };
+
+  handleMainMenuHover = option => {
+    this.setState(prevState => {
+      const updatedOptions = prevState.options.map(opt => {
+        return {
+          ...opt,
+          isActive: opt.id === option.id
+        };
+      });
+      return {
+        ...prevState,
+        options: [...updatedOptions]
+      };
+    });
+  };
+
+  handleSubMenuOptionClick = subOption => {
+    // Find which attribute has been changed (data/period)
+    let updatedOption = this.state.options.filter(opt => opt.isActive)[0];
+
+    // Update that attribute with new value
+    const updatedSubOptions = updatedOption.subOptions.map(opt => {
+      return {
+        ...opt,
+        isActive: opt.id === subOption.id
+      };
+    });
+
+    updatedOption.subOptions = [...updatedSubOptions];
+
+    // Depending on what changed, update state
+    switch (updatedOption.meta) {
+      case "data":
+        this.setState(
+          prevState => {
+            return {
+              ...prevState,
+              dataSelected: updatedOption.subOptions.filter(
+                opt => opt.isActive
+              )[0].meta,
+              options: prevState.options.map(opt => {
+                if (opt.isActive) {
+                  return {
+                    ...opt,
+                    subOptions: [...updatedSubOptions]
+                  };
+                } else {
+                  return opt;
+                }
+              })
+            };
+          },
+          () => this.switchChartDataHandler()
+        );
+        break;
+      case "period":
+        this.setState(
+          prevState => {
+            return {
+              ...prevState,
+              periodSelected: updatedOption.subOptions.filter(
+                opt => opt.isActive
+              )[0].meta,
+              options: prevState.options.map(opt => {
+                if (opt.isActive) {
+                  return {
+                    ...opt,
+                    subOptions: [...updatedSubOptions]
+                  };
+                } else {
+                  return opt;
+                }
+              })
+            };
+          },
+          () => this.switchChartDataHandler()
+        );
+        break;
+      default:
+        return false;
+    }
   };
 
   render() {
@@ -440,8 +566,9 @@ class Analytics extends Component {
       categories,
       series,
       type,
-      periodSelected,
-      dataSelected
+      dataSelected,
+      displayMenu,
+      options
     } = this.state;
     return (
       <div className={classes.Container}>
@@ -456,70 +583,13 @@ class Analytics extends Component {
             series={series}
             dataType={dataSelected[0].toUpperCase() + dataSelected.slice(1)}
           />
-          <div className={classes.LeftChartSwitchBtns}>
-            <button
-              type="button"
-              className={[
-                classes.BtnSwitch,
-                dataSelected === "all" ? classes.ActiveBtn : null
-              ].join(" ")}
-              onClick={() => this.switchChartDataHandler("all")}
-            >
-              All
-            </button>
-            <button
-              type="button"
-              className={[
-                classes.BtnSwitch,
-                dataSelected === "goal" ? classes.ActiveBtn : null
-              ].join(" ")}
-              onClick={() => this.switchChartDataHandler("goal")}
-            >
-              Goals
-            </button>
-            <button
-              type="button"
-              className={[
-                classes.BtnSwitch,
-                dataSelected === "todo" ? classes.ActiveBtn : null
-              ].join(" ")}
-              onClick={() => this.switchChartDataHandler("todo")}
-            >
-              ToDos
-            </button>
-          </div>
-          <div className={classes.RightChartSwitchBtns}>
-            <button
-              type="button"
-              className={[
-                classes.BtnSwitch,
-                periodSelected === "day" ? classes.ActiveBtn : null
-              ].join(" ")}
-              onClick={() => this.switchChartPeriodHandler("day")}
-            >
-              Daily
-            </button>
-            <button
-              type="button"
-              className={[
-                classes.BtnSwitch,
-                periodSelected === "week" ? classes.ActiveBtn : null
-              ].join(" ")}
-              onClick={() => this.switchChartPeriodHandler("week")}
-            >
-              Weekly
-            </button>
-            <button
-              type="button"
-              className={[
-                classes.BtnSwitch,
-                periodSelected === "month" ? classes.ActiveBtn : null
-              ].join(" ")}
-              onClick={() => this.switchChartPeriodHandler("month")}
-            >
-              Monthly
-            </button>
-          </div>
+          <GraphButton
+            switchMenu={this.handleSwitchGraphMenu}
+            isOpen={displayMenu}
+            options={options}
+            handleHover={this.handleMainMenuHover}
+            handleSubOptionClick={this.handleSubMenuOptionClick}
+          />
         </div>
       </div>
     );
@@ -536,3 +606,70 @@ const mapStateToProps = state => ({
   goalList: state.goal.goalList
 });
 export default connect(mapStateToProps)(Analytics);
+
+/*
+<div className={classes.LeftChartSwitchBtns}>
+  <button
+    type="button"
+    className={[
+      classes.BtnSwitch,
+      dataSelected === "all" ? classes.ActiveBtn : null
+    ].join(" ")}
+    onClick={() => this.switchChartDataHandler("all")}
+  >
+    All
+  </button>
+  <button
+    type="button"
+    className={[
+      classes.BtnSwitch,
+      dataSelected === "goal" ? classes.ActiveBtn : null
+    ].join(" ")}
+    onClick={() => this.switchChartDataHandler("goal")}
+  >
+    Goals
+  </button>
+  <button
+    type="button"
+    className={[
+      classes.BtnSwitch,
+      dataSelected === "todo" ? classes.ActiveBtn : null
+    ].join(" ")}
+    onClick={() => this.switchChartDataHandler("todo")}
+  >
+    ToDos
+  </button>
+</div>
+<div className={classes.RightChartSwitchBtns}>
+  <button
+    type="button"
+    className={[
+      classes.BtnSwitch,
+      periodSelected === "day" ? classes.ActiveBtn : null
+    ].join(" ")}
+    onClick={() => this.switchChartPeriodHandler("day")}
+  >
+    Daily
+  </button>
+  <button
+    type="button"
+    className={[
+      classes.BtnSwitch,
+      periodSelected === "week" ? classes.ActiveBtn : null
+    ].join(" ")}
+    onClick={() => this.switchChartPeriodHandler("week")}
+  >
+    Weekly
+  </button>
+  <button
+    type="button"
+    className={[
+      classes.BtnSwitch,
+      periodSelected === "month" ? classes.ActiveBtn : null
+    ].join(" ")}
+    onClick={() => this.switchChartPeriodHandler("month")}
+  >
+    Monthly
+  </button>
+</div>
+*/

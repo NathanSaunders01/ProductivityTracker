@@ -1,0 +1,43 @@
+.MenuItem {
+  padding: 0px 8px;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  position: relative;
+  min-width: 120px;
+}
+
+.MenuItem i {
+  margin-left: 10px;
+}
+
+.SubMenuList {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  color: white;
+  background-color: #162756;
+  list-style: none;
+  text-align: left;
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.2);
+}
+
+.SubMenuItem {
+  padding: 0px 8px;
+  height: 30px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 120px;
+}
+
+.SubMenuItem:hover {
+  background-color: #9099b9;
+}
