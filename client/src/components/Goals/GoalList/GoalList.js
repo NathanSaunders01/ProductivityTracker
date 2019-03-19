@@ -1,14 +1,22 @@
 import React from "react";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import GoalItem from "./GoalItem/GoalItem";
 import classes from "./GoalList.module.css";
 
 const goalList = ({ goalList, setRef }) => {
-  const goalItems = goalList
-    .map(item => <GoalItem item={item} key={item.id} />)
-    .concat(<div key={"000"} ref={setRef} />);
+  const goalItems = goalList.map(item => (
+    <CSSTransition key={item.id} timeout={500} classNames="move">
+      <GoalItem item={item} />
+    </CSSTransition>
+  ));
+
   const blankMessage =
-    goalList.length > 0 ? null : <p>You have no items on your goal list!</p>;
+    goalList.length > 0 ? null : (
+      <CSSTransition timeout={500} classNames="move">
+        <p>You have no items on your goal list!</p>
+      </CSSTransition>
+    );
   const header =
     goalList.length > 0 ? (
       <div
@@ -24,13 +32,13 @@ const goalList = ({ goalList, setRef }) => {
   return (
     <div>
       {header}
-      <ul
+      <TransitionGroup
         className={classes.List}
-        style={{ paddingRight: goalList.length > 7 ? "16px" : "0px" }}
+        style={{ paddingRight: goalList.length >= 7 ? "16px" : "0px" }}
       >
         {blankMessage}
         {goalItems}
-      </ul>
+      </TransitionGroup>
     </div>
   );
 };

@@ -1,14 +1,21 @@
 import React from "react";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import ToDoItem from "./ToDoItem/ToDoItem";
 import classes from "./ToDoList.module.css";
 
-const toDoList = ({ todoList, setRef }) => {
-  const todoItems = todoList
-    .map(item => <ToDoItem item={item} key={item.id} />)
-    .concat(<div key={"000"} ref={setRef} />);
+const toDoList = ({ todoList }) => {
+  const todoItems = todoList.map(item => (
+    <CSSTransition key={item.id} timeout={500} classNames="move">
+      <ToDoItem item={item} key={item.id} />
+    </CSSTransition>
+  ));
   const blankMessage =
-    todoList.length > 0 ? null : <p>You have no items on your TODO list!</p>;
+    todoList.length > 0 ? null : (
+      <CSSTransition timeout={500} classNames="move">
+        <p>You have no items on your TODO list!</p>
+      </CSSTransition>
+    );
   const header =
     todoList.length > 0 ? (
       <div
@@ -24,13 +31,13 @@ const toDoList = ({ todoList, setRef }) => {
   return (
     <div>
       {header}
-      <ul
+      <TransitionGroup
         className={classes.List}
-        style={{ paddingRight: todoList.length > 7 ? "16px" : "0px" }}
+        style={{ paddingRight: todoList.length >= 7 ? "16px" : "0px" }}
       >
         {blankMessage}
         {todoItems}
-      </ul>
+      </TransitionGroup>
     </div>
   );
 };

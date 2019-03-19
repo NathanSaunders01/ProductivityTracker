@@ -8,6 +8,7 @@ import ToDo from "../../components/ToDo/ToDo";
 import Analytics from "../../components/Analytics/Analytics";
 import Goals from "../../components/Goals/Goals";
 import Activities from "../../components/Activities/Activities";
+import Rewards from "../../components/Rewards/Rewards";
 import Categories from "../../components/Categories/Categories";
 import BackDrop from "../../components/UI/BackDrop/BackDrop";
 
@@ -54,6 +55,9 @@ class Dashboard extends Component {
           displayCategories={displayCategories}
           goal={goalToCategorise}
         />
+        <div className={classes.BlockGroup}>
+          <Rewards />
+        </div>
         <div className={classes.BlockGroup}>
           <div className={classes.Small}>
             <ToDo />
