@@ -20,7 +20,7 @@
 
 ![alt text](Analytics.png "Logo Title Text 1")
 
-#### To-do list\
+#### To-do list
 
 ![alt text](Todos.png "Logo Title Text 1")
 
