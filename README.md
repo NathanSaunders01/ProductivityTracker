@@ -5,6 +5,6 @@
 #### Stack
 
 - Ruby on Rails Rest API (GraphQL integrated but not connected to client)
-- PostgresQL
+- Postgresql
 - React
 - Redux
