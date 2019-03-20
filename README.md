@@ -18,6 +18,8 @@
 
 #### Interactive chart with custom menu
 
+![alt text](https://github.com/NathanSaunders01/ProductivityTracker/tree/master/github/Analytics.png "Logo Title Text 1")
+
 #### To-do list
 
 #### Habit list
@@ -27,5 +29,7 @@
 ## Backend
 
 #### Chart data
+
+#### Streaks
 
 #### GraphQL
