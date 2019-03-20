@@ -20,11 +20,17 @@
 
 ![alt text](Analytics.png "Logo Title Text 1")
 
-#### To-do list
+#### To-do list\
+
+![alt text](Todos.png "Logo Title Text 1")
 
 #### Habit list
 
+![alt text](Goals.png "Logo Title Text 1")
+
 #### Activity list
+
+![alt text](Activities.png "Logo Title Text 1")
 
 ## Backend
 
