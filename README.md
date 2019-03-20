@@ -5,10 +5,10 @@
 ### Stack
 
 - Ruby on Rails Rest API (GraphQL integrated but not fully connected to the client)
-- Postgresql
 - React
 - Redux
 - User token authentication between API and client
+- Postgresql
 
 ## Animations
 
