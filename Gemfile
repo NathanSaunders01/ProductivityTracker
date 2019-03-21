@@ -39,6 +39,10 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
+group :test do
+  gem 'factory_bot'
+end
+
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
@@ -50,6 +54,8 @@ group :development do
 
   # Seed data generator
   gem 'faker'
+
+  gem 'pry', '~> 0.12.2'
 end
 
 

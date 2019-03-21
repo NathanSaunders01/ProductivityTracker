@@ -31,12 +31,12 @@ class Goals extends Component {
         frequency: "",
         focusedEl: null
       });
-      if (prevProps.goalList.length !== 0) {
-        this.itemRef.current.scrollIntoView({
-          behavior: "smooth",
-          block: "end"
-        });
-      }
+      // if (prevProps.goalList.length !== 0) {
+      //   this.itemRef.scrollIntoView({
+      //     behavior: "smooth",
+      //     block: "end"
+      //   });
+      // }
     }
   }
 

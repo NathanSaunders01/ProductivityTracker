@@ -32,12 +32,15 @@ module Api::V1
 
                 categories = user.categories
 
+                rewards = user.rewards
+
                 data = {
                     user: userData,
                     goalList: updated_goals,
                     todoList: updated_todos,
                     activityList: updated_activities,
-                    categoryList: categories
+                    categoryList: categories,
+                    rewardList: rewards
                 }
                 render json: data, status: :ok
             else

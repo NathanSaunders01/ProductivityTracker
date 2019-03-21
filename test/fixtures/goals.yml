@@ -1,19 +1,19 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  title: MyString
-  description: MyString
-  xp_value: 1
-  user_id: MyString
-  references: MyString
-  is_recurring: MyString
-  frequency: 1
+# one:
+#   title: MyString
+#   description: MyString
+#   xp_value: 1
+#   user_id: MyString
+#   references: MyString
+#   is_recurring: MyString
+#   frequency: 1
 
-two:
-  title: MyString
-  description: MyString
-  xp_value: 1
-  user_id: MyString
-  references: MyString
-  is_recurring: MyString
-  frequency: 1
+# two:
+#   title: MyString
+#   description: MyString
+#   xp_value: 1
+#   user_id: MyString
+#   references: MyString
+#   is_recurring: MyString
+#   frequency: 1

@@ -20,8 +20,6 @@ class ToDo extends Component {
       timer: "",
       focusedEl: null
     };
-
-    this.itemRef = React.createRef();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -32,12 +30,6 @@ class ToDo extends Component {
         timer: "",
         focusedEl: null
       });
-      if (prevProps.todoList.length !== 0) {
-        this.itemRef.current.scrollIntoView({
-          behavior: "smooth",
-          block: "end"
-        });
-      }
     }
   }
 
@@ -98,7 +90,7 @@ class ToDo extends Component {
           <h4>ToDo List</h4>
         </div>
         <div className={classes.Content}>
-          <ToDoList todoList={this.props.todoList} setRef={this.itemRef} />
+          <ToDoList todoList={this.props.todoList} />
           <div
             className={classes.FormWrapper}
             style={{ height: showForm ? "60px" : 0 }}

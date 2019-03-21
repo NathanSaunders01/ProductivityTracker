@@ -3,15 +3,22 @@ import Auth from "../utils/Auth";
 import setAuthToken from "../utils/setAuthToken";
 import {
   LOAD_CURRENT_USER,
+  LOAD_REGISTER_USER,
+  LOAD_LOGIN_USER,
   SET_CURRENT_USER,
   GET_ERRORS,
   SET_GOALS,
   SET_ACTIVITIES,
-  SET_CATEGORIES
+  SET_CATEGORIES,
+  SET_REWARDS
 } from "./types";
 
 // Register User
 export const registerUser = userData => dispatch => {
+  dispatch({
+    type: LOAD_REGISTER_USER,
+    payload: {}
+  });
   axios
     .post("/api/v1/signup", { user: userData })
     .then(res => {
@@ -64,6 +71,10 @@ export const getCurrentUser = token => dispatch => {
         type: SET_CATEGORIES,
         payload: res.data
       });
+      dispatch({
+        type: SET_REWARDS,
+        payload: res.data
+      });
     })
     .catch(err =>
       dispatch({
@@ -83,6 +94,10 @@ export const setCurrentUser = data => {
 
 // Login user
 export const loginUser = userData => dispatch => {
+  dispatch({
+    type: LOAD_LOGIN_USER,
+    payload: {}
+  });
   axios
     .post("/api/v1/login", { user: userData })
     .then(res => {
@@ -111,6 +126,11 @@ export const loginUser = userData => dispatch => {
       // Set user's categories
       dispatch({
         type: SET_CATEGORIES,
+        payload: res.data
+      });
+      // Set user's rewards
+      dispatch({
+        type: SET_REWARDS,
         payload: res.data
       });
     })
@@ -145,6 +165,10 @@ export const logoutUser = () => dispatch => {
       dispatch({
         type: SET_ACTIVITIES,
         payload: { activityList: [] }
+      });
+      dispatch({
+        type: SET_REWARDS,
+        payload: { rewardList: [] }
       });
     })
     .catch(err =>

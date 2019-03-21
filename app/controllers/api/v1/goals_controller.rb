@@ -28,7 +28,7 @@ module Api::V1
         
         def create
             @goal = Goal.new(goal_params)
-            @goal.user_id = current_user.id
+            @goal.user_id = current_user.id if params["user_id"].nil?
             if @goal.save
                 goal_data = JSON.parse(@goal.to_json)
                 goal_data["time_left"] = @goal.time_left_to_complete if @goal.is_recurring === 0

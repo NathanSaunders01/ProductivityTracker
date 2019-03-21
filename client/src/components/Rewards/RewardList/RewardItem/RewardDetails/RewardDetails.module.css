@@ -1,0 +1,81 @@
+.Details {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.Header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.Title {
+  text-align: left;
+  margin: 0;
+  padding-right: 8px;
+}
+
+.DaysLeft {
+  font-size: 12px;
+  margin: 0;
+  text-align: right;
+}
+
+.BottomRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.BarContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.BarWrapper {
+  margin-bottom: 6px;
+}
+
+.ProgressHeader {
+  font-size: 14px;
+  margin: 0;
+  text-align: left;
+  padding-bottom: 4px;
+}
+
+.Progress {
+  border: 1px solid #efca00;
+  width: 160px;
+  height: 18px;
+  border-radius: 18px;
+  background-color: white;
+  overflow: hidden;
+  position: relative;
+}
+
+.XpCalc {
+  font-size: 14px !important;
+}
+
+.Delete {
+  height: 16px;
+  width: 16px;
+  background: -webkit-linear-gradient(
+      -45deg,
+      transparent 0%,
+      transparent 46%,
+      #e84242 46%,
+      #e84242 56%,
+      transparent 56%,
+      transparent 100%
+    ),
+    -webkit-linear-gradient(45deg, transparent 0%, transparent 46%, #e84242 46%, #e84242
+          56%, transparent 56%, transparent 100%);
+  border: none !important;
+  cursor: pointer;
+}

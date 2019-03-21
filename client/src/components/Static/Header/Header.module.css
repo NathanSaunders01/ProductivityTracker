@@ -1,0 +1,175 @@
+.Header {
+  height: 95vh;
+  background-size: cover;
+  background-position: top;
+  position: relative;
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+}
+
+.Header .HeaderLogoBox {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.HeaderLogin {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+.HeaderLoginWrapper {
+  position: relative;
+}
+
+.HeaderLoginText {
+  color: white;
+  margin: 0;
+  padding: 10px 6px;
+  cursor: pointer;
+}
+
+.HeaderLoginTextOpen {
+  color: #162756;
+  background-color: white;
+  margin: 0;
+  padding: 10px 6px;
+  cursor: pointer;
+}
+
+.LoginContainer {
+  position: absolute;
+}
+
+.Header .HeaderLogo {
+  height: 80px;
+}
+
+.Header .HeaderTextBox {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.Header .LogoAnimated {
+  animation: moveInBottom 0.5s ease-out 0.75s;
+  animation-fill-mode: backwards;
+}
+
+.HeaderSmall {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  margin: 120px auto 0;
+  color: #fff !important;
+}
+
+.HeaderSmall span {
+  flex-basis: 25%;
+  text-transform: capitalize;
+}
+
+.HeaderSmall span:not(:last-child) {
+  border-right: 1px solid white;
+}
+
+.HeadingPrimary {
+  color: #fff;
+  margin-bottom: 60px;
+  font-family: "Lato", sans-serif;
+  backface-visibility: hidden;
+}
+.HeadingPrimary .HeadingPrimaryMain {
+  display: block;
+  font-size: 36px;
+  font-weight: 400;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  animation-name: moveInLeft;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+  margin-bottom: 40px;
+}
+.HeadingPrimary .HeadingPrimarySub {
+  display: block;
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: 3;
+  animation: moveInRight 1s ease-out;
+}
+.HeadingPrimary .HeadingPrimarySubSmall {
+  display: block;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  color: #fff;
+}
+
+.HeadingSecondary {
+  font-size: 36px;
+  text-transform: uppercase;
+  font-weight: 700;
+  display: inline-block;
+  background-image: linear-gradient(to right, #2998ff, #5643fa);
+  -webkit-background-clip: text;
+  color: transparent;
+  letter-spacing: 0.2rem;
+}
+
+.HeadingTertiary {
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.Button,
+.Button:link,
+.Button:visited {
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 12px 36px;
+  display: inline-block;
+  border-radius: 50px;
+  transition: all 0.2s;
+  position: relative;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.Button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 1rem 2rem rgba(#000, 0.2);
+}
+
+.Button:active,
+.Button:focus {
+  transform: translateY(-1px);
+  box-shadow: 0 0.5rem 1rem rgba(#000, 0.2);
+}
+
+.ButtonWhite {
+  background-color: #fff;
+  color: #000;
+}
+
+.ButtonWhite::after {
+  background-color: #fff;
+}
+
+@media (max-width: 769px) {
+  .HeaderSmall {
+    margin: 20px auto 0;
+  }
+
+  .HeadingPrimary {
+    margin-bottom: 20px;
+  }
+}

@@ -4,7 +4,7 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import classes from "./ActivityList.module.css";
 import ActivityItem from "./ActivityItem/ActivityItem";
 
-const activityList = ({ activityList, setRef }) => {
+const activityList = ({ activityList }) => {
   const activityItems = activityList.map(item => (
     <CSSTransition key={item.id} timeout={500} classNames="move">
       <ActivityItem item={item} />

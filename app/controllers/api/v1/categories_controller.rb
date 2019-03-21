@@ -4,10 +4,6 @@ module Api::V1
         before_action :set_category, except: [:create, :index]
         before_action :require_same_user, except: [:create, :index]
 
-        def index
-            render json: {message: "hello"}, status: :ok
-        end
-
         def create
             @category = Category.new(category_params)
             @category.user_id = current_user.id

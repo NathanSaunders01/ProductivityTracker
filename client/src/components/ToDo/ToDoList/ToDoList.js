@@ -7,7 +7,7 @@ import classes from "./ToDoList.module.css";
 const toDoList = ({ todoList }) => {
   const todoItems = todoList.map(item => (
     <CSSTransition key={item.id} timeout={500} classNames="move">
-      <ToDoItem item={item} key={item.id} />
+      <ToDoItem item={item} />
     </CSSTransition>
   ));
   const blankMessage =

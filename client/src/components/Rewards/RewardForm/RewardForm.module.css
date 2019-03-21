@@ -1,0 +1,141 @@
+.Card {
+  perspective: 150rem;
+  -mox-perspective: 150rem;
+  position: relative;
+  height: 240px;
+  min-width: 240px;
+  margin-right: 20px;
+}
+
+/* .Card:not(:last-child) {
+  margin-right: 20px;
+} */
+
+.CardSide {
+  height: 240px;
+  transition: all 1s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  backface-visibility: hidden;
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15);
+}
+
+.CardSideFront {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.CardLogo {
+  width: 80px;
+}
+
+.CardSideBack {
+  transform: rotateY(180deg);
+  display: flex;
+  padding: 10px;
+  position: relative;
+}
+
+.CardSideBack form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+/* .Card:hover .CardSideFront {
+  transform: rotateY(-180deg);
+}
+
+.Card:hover .CardSideBack {
+  transform: rotateY(0);
+} */
+
+.Progress {
+  border: 1px solid #efca00;
+  width: 100px;
+  height: 18px;
+  border-radius: 18px;
+  margin-top: 20px;
+  background-color: white;
+  overflow: hidden;
+  position: relative;
+}
+
+.EmptyForm {
+  height: 100%;
+  width: 100%;
+  border-radius: 6px;
+  border: 2px dashed #162756;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ShowForm {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: #162756;
+  height: 32px;
+  position: relative;
+  width: 4px;
+  padding: 0;
+}
+
+.ShowForm:after {
+  background: #162756;
+  content: "";
+  height: 4px;
+  left: -14px;
+  position: absolute;
+  top: 14px;
+  width: 32px;
+}
+
+.CloseFormWrapper {
+  position: absolute;
+  right: 10px;
+  width: 24px;
+  top: 10px;
+  z-index: 100;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.CloseForm {
+  height: 16px;
+  width: 16px;
+  background: -webkit-linear-gradient(
+      -45deg,
+      transparent 0%,
+      transparent 46%,
+      #e84242 46%,
+      #e84242 56%,
+      transparent 56%,
+      transparent 100%
+    ),
+    -webkit-linear-gradient(45deg, transparent 0%, transparent 46%, #e84242 46%, #e84242
+          56%, transparent 56%, transparent 100%);
+  border: none !important;
+  cursor: pointer;
+  outline: none;
+}
+
+.AddButton {
+  background-color: #162756;
+  width: 100%;
+  padding: 8px;
+  color: white;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+}

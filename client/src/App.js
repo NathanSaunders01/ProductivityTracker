@@ -21,7 +21,6 @@ import store from "./store";
 // Container Imports
 import Landing from "./containers/Landing/Landing";
 import Dashboard from "./containers/Dashboard/Dashboard";
-import Navigation from "./components/Navigation/Navigation";
 
 store.dispatch(loadCurrentUser());
 
@@ -72,7 +71,6 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Navigation />
         <Router>
           <div className="App">
             <Route path="/" exact component={Landing} />

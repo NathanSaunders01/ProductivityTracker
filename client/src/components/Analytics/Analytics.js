@@ -65,7 +65,6 @@ class Analytics extends Component {
       .post("/api/v1/get_chart_data", { period: "day", dataType: "all" })
       .then(res => {
         const { title, categories, series } = res.data;
-        console.log(res.data);
         if (this._isMounted) {
           this.setState({
             title: title,
@@ -620,6 +619,7 @@ class Analytics extends Component {
       series,
       type,
       dataSelected,
+      periodSelected,
       displayMenu,
       options
     } = this.state;
@@ -635,6 +635,9 @@ class Analytics extends Component {
             categories={categories}
             series={series}
             dataType={dataSelected[0].toUpperCase() + dataSelected.slice(1)}
+            periodType={
+              periodSelected[0].toUpperCase() + periodSelected.slice(1)
+            }
           />
           <GraphButton
             switchMenu={this.handleSwitchGraphMenu}

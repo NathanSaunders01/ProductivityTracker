@@ -25,7 +25,7 @@
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
   margin-top: 8px;
-  padding: 20px 20px 60px 20px;
+  padding: 0;
   position: relative;
 }
 
@@ -44,4 +44,5 @@
   color: #162756;
   font-size: 14px;
   cursor: pointer;
+  outline: none;
 }

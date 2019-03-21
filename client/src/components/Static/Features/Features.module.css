@@ -1,0 +1,66 @@
+.Features {
+  padding: 5rem 5rem 10rem 5rem;
+}
+
+.Row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+.FeatureBox {
+  background-color: rgba(255, 255, 255, 0.5);
+  font-size: 1.5rem;
+  padding: 1.5rem;
+  text-align: center;
+  border-radius: 3px;
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s;
+  max-width: 250px;
+  display: flex;
+  flex-direction: column;
+}
+
+.FeatureBoxIcon {
+  font-size: 48px;
+  margin-bottom: 0.5rem;
+  display: inline-block;
+  color: #162756;
+}
+
+.FeatureBox:hover {
+  transform: translateY(-1.5rem) scale(1.03);
+}
+
+.FeatureBoxText {
+  font-size: 16px;
+}
+
+.HeadingSecondary {
+  font-weight: 200;
+  display: inline-block;
+  color: #162756;
+  font-size: 32px;
+}
+
+.HeadingTertiary {
+  font-size: 16px;
+  font-weight: 200;
+  text-transform: uppercase;
+  flex: 1;
+}
+
+@media (max-width: 769px) {
+  .Features {
+    padding: 3rem 3rem 6rem 3rem;
+  }
+
+  .Row {
+    flex-wrap: wrap !important;
+  }
+
+  .FeatureBox {
+    max-width: none;
+    display: flex;
+  }
+}

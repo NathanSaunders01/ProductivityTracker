@@ -3,11 +3,18 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import gradstop from "gradstop";
 
-const columnGraph = ({ title, categories, series, type, dataType }) => {
+const columnGraph = ({
+  title,
+  categories,
+  series,
+  type,
+  dataType,
+  periodType
+}) => {
   const gradient = gradstop({
     stops: categories.length > 0 ? categories.length : 5,
     inputFormat: "hex",
-    colorArray: ["#5dbcd3", "#11174b"]
+    colorArray: ["#b6d9ef", "#11174b"]
   });
   const options = {
     chart: {
@@ -15,7 +22,7 @@ const columnGraph = ({ title, categories, series, type, dataType }) => {
     },
     colors: gradient,
     title: {
-      text: `${dataType} ${title}`
+      text: `${dataType} XP by ${periodType}`
     },
     xAxis: {
       categories: categories

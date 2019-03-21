@@ -1,0 +1,73 @@
+.SignUpContainer {
+  padding: 0 80px 80px 80px;
+}
+
+.SignUp {
+  background-size: cover;
+  border-radius: 3px;
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.2);
+}
+
+.SignUpForm {
+  width: 50%;
+  padding: 6rem;
+}
+
+.HeadingSecondary {
+  font-weight: 400;
+  text-align: left;
+  color: #162756;
+}
+
+.FormGroup:not(:last-child) {
+  margin-bottom: 2rem;
+}
+
+.FormGroup.Name {
+  display: flex;
+}
+
+.FormGroupFirstName {
+  width: 50%;
+}
+
+.FormGroupLastName {
+  width: 50%;
+}
+
+.SubmitButton {
+  background-color: #162756;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 12px 36px;
+  display: inline-block;
+  border-radius: 50px;
+  transition: all 0.2s;
+  position: relative;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  color: white;
+}
+
+.SubmitButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 1rem 2rem rgba(#000, 0.2);
+}
+
+.SubmitButton:active,
+.SubmitButton:focus {
+  transform: translateY(-1px);
+  box-shadow: 0 0.5rem 1rem rgba(#000, 0.2);
+}
+
+@media (max-width: 769px) {
+  .SignUpContainer {
+    padding: 3rem 3rem 6rem 3rem;
+  }
+
+  .SignUpForm {
+    width: 100%;
+    padding: 1rem;
+  }
+}

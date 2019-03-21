@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import { logoutUser } from "../../actions/authActions";
 import { closeCategoriesBox } from "../../actions/goalActions";
+import Navigation from "../../components/Navigation/Navigation";
 import ToDo from "../../components/ToDo/ToDo";
 import Analytics from "../../components/Analytics/Analytics";
 import Goals from "../../components/Goals/Goals";
@@ -46,6 +47,7 @@ class Dashboard extends Component {
     }
     return (
       <div>
+        <Navigation />
         {backDrop}
         <h1>Dashboard</h1>
         <button type="button" onClick={logoutUser}>

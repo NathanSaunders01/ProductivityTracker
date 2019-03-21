@@ -1,0 +1,26 @@
+.LoginButton {
+  background-color: #162756;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 8px 36px;
+  display: inline-block;
+  border-radius: 50px;
+  transition: all 0.2s;
+  position: relative;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  margin-top: 10px;
+}
+
+.LoginForm {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  padding: 20px;
+  width: 320px;
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.2);
+  z-index: 500;
+}

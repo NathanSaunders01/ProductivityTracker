@@ -30,7 +30,7 @@
 
 #### Habit list
 
-![alt text](Goals.png "Goals list")
+![](GoalList.gif)
 
 #### Activity list
 
@@ -40,6 +40,12 @@
 
 #### Chart data
 
+Chart data is initially queried and formatted by the API. All updates using the interactive menu is formatted in React
+
 #### Streaks
 
+Checking whether an activity for a goal or to-do qualifies for bonus XP
+
 #### GraphQL
+
+Implemented a GraphQL schema for the API to make queries and mutations

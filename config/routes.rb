@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       resources :goals
       resources :activities
       resources :categories
+      resources :rewards
       post "/get_chart_data", to: "goals#get_chart_data"
       get "/test", to: "users#test"
       post "/signup", to: "users#create"

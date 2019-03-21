@@ -1,7 +1,10 @@
+require 'pry'
+
 class User < ApplicationRecord
     has_many :activities, dependent: :destroy
     has_many :goals, dependent: :destroy
     has_many :categories, dependent: :destroy
+    has_many :rewards, dependent: :destroy
 
     has_secure_password
     has_secure_token :auth_token  
