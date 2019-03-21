@@ -18,21 +18,23 @@
 
 #### Reward form
 
+![](RewardsForm.gif)
+
 #### Interactive chart with custom menu
 
-![alt text](Analytics.png "Logo Title Text 1")
+![alt text](Analytics.png "Interactive chart")
 
 #### To-do list
 
-![alt text](Todos.png "Logo Title Text 1")
+![alt text](Todos.png "To-do list")
 
 #### Habit list
 
-![alt text](Goals.png "Logo Title Text 1")
+![alt text](Goals.png "Goals list")
 
 #### Activity list
 
-![alt text](Activities.png "Logo Title Text 1")
+![alt text](Activities.png "Activity list")
 
 ## Backend
 
