@@ -14,6 +14,8 @@
 
 #### Rewards list
 
+![](RewardsFlip.gif)
+
 #### Reward form
 
 #### Interactive chart with custom menu
