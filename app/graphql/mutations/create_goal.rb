@@ -19,7 +19,7 @@ class Mutations::CreateGoal < Mutations::BaseMutation
 		# end
 
 		goal = Goal.new(title: title, xp_value: xp_value, frequency: frequency, is_recurring: is_recurring)
-		binding.pry
+		# binding.pry
 		if goal.save
 		# Successful creation, return the created object with no errors
 		{

@@ -1,5 +1,3 @@
-require 'pry'
-
 class User < ApplicationRecord
     has_many :activities, dependent: :destroy
     has_many :goals, dependent: :destroy
