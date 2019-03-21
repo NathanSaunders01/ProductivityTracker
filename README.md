@@ -1,4 +1,4 @@
-## Merit - Another productivity web app
+## Meritokracy - Another productivity web app
 
 #### A fully interactive dashboard combining your to-do list, good habits and guilty pleasures to boost motivation and persistence using visuals, gamification and other incentives
 
@@ -42,7 +42,7 @@
 
 #### Chart data
 
-Chart data is initially queried and formatted by the API. All updates using the interactive menu is formatted in React
+Chart data is initially queried and formatted by the API. All updates using the interactive menu are formatted in React
 
 #### Streaks
 
@@ -51,3 +51,8 @@ Checking whether an activity for a goal or to-do qualifies for bonus XP
 #### GraphQL
 
 Implemented a GraphQL schema for the API to make queries and mutations
+
+## TODO
+
+- Add content section to README
+- Add Elasticsearch for querying data
