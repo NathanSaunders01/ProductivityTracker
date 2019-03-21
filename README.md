@@ -20,13 +20,13 @@
 
 ![](RewardsForm.gif)
 
-#### Interactive chart with custom menu
+#### Interactive chart with custom built menu
 
-![alt text](Analytics.png "Interactive chart")
+![](InteractiveChart.gif)
 
 #### To-do list
 
-![alt text](Todos.png "To-do list")
+![](TodoList.gif)
 
 #### Habit list
 
