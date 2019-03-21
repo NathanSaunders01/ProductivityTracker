@@ -34,10 +34,6 @@
 
 ![](GoalList.gif)
 
-#### Activity list
-
-![alt text](Activities.png "Activity list")
-
 ## Backend
 
 #### Chart data
