@@ -39,9 +39,9 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
-group :test do
-  gem 'factory_bot'
-end
+# group :test do
+#   gem 'factory_bot'
+# end
 
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
@@ -52,10 +52,10 @@ group :development do
   # A development utility to test GraphQL queries.
   gem 'graphiql-rails'
 
-  # Seed data generator
-  gem 'faker'
+  # # Seed data generator
+  # gem 'faker'
 
-  gem 'pry', '~> 0.12.2'
+  # gem 'pry', '~> 0.12.2'
 end
 
 
