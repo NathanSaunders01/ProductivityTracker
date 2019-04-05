@@ -21,16 +21,24 @@ class ProgressBar extends Component {
     );
   }
 
+  componentDidUpdate() {
+    this.loadProgress = requestAnimationFrame(() => {
+      this.setState({ width: this.props.width });
+    });
+  }
+
   componentWillUnmount() {
     clearTimeout(this.timeOutCheck);
     cancelAnimationFrame(this.loadProgress);
   }
 
   render() {
+    const { width } = this.state;
+    const { color } = this.props;
     return (
       <span
         className={classes.ProgressBar}
-        style={{ width: this.state.width }}
+        style={{ width: `${width}%`, backgroundColor: color }}
       />
     );
   }

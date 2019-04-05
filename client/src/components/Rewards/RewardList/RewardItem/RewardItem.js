@@ -18,7 +18,7 @@ const rewardItem = ({ item }) => {
           alt="Meritokracy Crown Logo"
         />
         <div className={classes.Progress}>
-          <ProgressBar width={item.width} index={item.id} />
+          <ProgressBar width={item.width} color="#efca00" />
         </div>
       </div>
       <div

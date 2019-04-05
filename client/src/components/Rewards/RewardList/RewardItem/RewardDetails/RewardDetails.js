@@ -23,19 +23,28 @@ const rewardDetails = ({ item }) => {
         <div className={classes.BarWrapper}>
           <p className={classes.ProgressHeader}>Daily</p>
           <div className={classes.Progress}>
-            <ProgressBar width={`${Math.floor(Math.random() * 76) + 24}%`} />
+            <ProgressBar
+              width={`${Math.floor(Math.random() * 76) + 24}`}
+              color="#efca00"
+            />
           </div>
         </div>
         <div className={classes.BarWrapper}>
           <p className={classes.ProgressHeader}>Weekly</p>
           <div className={classes.Progress}>
-            <ProgressBar width={`${Math.floor(Math.random() * 76) + 24}%`} />
+            <ProgressBar
+              width={`${Math.floor(Math.random() * 76) + 24}`}
+              color="#efca00"
+            />
           </div>
         </div>
         <div className={classes.BarWrapper}>
           <p className={classes.ProgressHeader}>Monthly</p>
           <div className={classes.Progress}>
-            <ProgressBar width={`${Math.floor(Math.random() * 76) + 24}%`} />
+            <ProgressBar
+              width={`${Math.floor(Math.random() * 76) + 24}`}
+              color="#efca00"
+            />
           </div>
         </div>
       </div>

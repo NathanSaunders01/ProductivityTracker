@@ -1,10 +1,12 @@
-export const LOAD_CURRENT_USER = "LOAD_CURRENT_USER";
-export const LOAD_REGISTER_USER = "LOAD_REGISTER_USER";
-export const LOAD_LOGIN_USER = "LOAD_LOGIN_USER";
+export const LOAD_USER = "LOAD_CURRENT_USER";
 export const GET_CURRENT_USER = "GET_CURRENT_USER";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
+export const LOGIN_FAIL = "LOGIN_FAIL";
+export const REGISTER_FAIL = "REGISTER_FAIL";
+export const RESET_AUTH = "RESET_AUTH";
 
-export const GET_ERRORS = "GET_ERRORS";
+export const GET_ALERTS = "GET_ALERTS";
+export const CLEAR_ALERTS = "CLEAR_ALERTS";
 
 export const ADD_GOAL = "ADD_GOAL";
 export const ADD_TODO = "ADD_TODO";

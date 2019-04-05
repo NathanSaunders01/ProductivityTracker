@@ -3,12 +3,14 @@ import {
   ADD_GOAL,
   ADD_TODO,
   SET_GOALS,
-  GET_ERRORS,
+  GET_ALERTS,
+  CLEAR_ALERTS,
   REMOVE_GOAL,
   REMOVE_TODO,
   UPDATE_CATEGORY_FOR_GOAL,
   SET_CATEGORIES_FOR_GOAL
 } from "./types";
+import { clearAlerts } from "./alertActions";
 
 // Add a recurring goal
 export const addGoal = goalData => dispatch => {
@@ -22,11 +24,14 @@ export const addGoal = goalData => dispatch => {
       });
     })
     .catch(err => {
-      console.log(err.response.data);
+      console.log(err.response);
       dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
+        type: GET_ALERTS,
+        payload: err.response
       });
+      setTimeout(() => {
+        dispatch({ type: CLEAR_ALERTS });
+      }, 5000);
     });
 };
 
@@ -42,11 +47,14 @@ export const addTodo = todoData => dispatch => {
       });
     })
     .catch(err => {
-      console.log(err.response.data);
+      console.log(err.response);
       dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
+        type: GET_ALERTS,
+        payload: err.response
       });
+      setTimeout(() => {
+        dispatch({ type: CLEAR_ALERTS });
+      }, 5000);
     });
 };
 
@@ -62,11 +70,14 @@ export const getGoals = () => dispatch => {
       });
     })
     .catch(err => {
-      console.log(err.response.data);
+      console.log(err.response);
       dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
+        type: GET_ALERTS,
+        payload: err.response
       });
+      setTimeout(() => {
+        dispatch({ type: CLEAR_ALERTS });
+      }, 5000);
     });
 };
 
@@ -83,11 +94,14 @@ export const removeGoal = goal => dispatch => {
       });
     })
     .catch(err => {
-      console.log(err.response.data);
+      console.log(err.response);
       dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
+        type: GET_ALERTS,
+        payload: err.response
       });
+      setTimeout(() => {
+        dispatch({ type: CLEAR_ALERTS });
+      }, 5000);
     });
 };
 
@@ -113,6 +127,13 @@ export const updateCategoryForGoal = data => dispatch => {
     })
     .catch(err => {
       console.log(err.response);
+      dispatch({
+        type: GET_ALERTS,
+        payload: err.response
+      });
+      setTimeout(() => {
+        dispatch({ type: CLEAR_ALERTS });
+      }, 5000);
     });
 };
 

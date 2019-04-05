@@ -9,9 +9,7 @@ const features = () => {
         <h1 className={classes.HeadingSecondary}>How it works</h1>
       </div>
       <div className={classes.Row}>
-        <div
-          className={[classes.FeatureBox, "u-margin-bottom-small"].join(" ")}
-        >
+        <div className={[classes.FeatureBox, "u-margin-bottom-med"].join(" ")}>
           <i
             className={[classes.FeatureBoxIcon, "fa", "fa-3x", "fa-list"].join(
               " "
@@ -30,9 +28,7 @@ const features = () => {
             appealing ones...
           </p>
         </div>
-        <div
-          className={[classes.FeatureBox, "u-margin-bottom-small"].join(" ")}
-        >
+        <div className={[classes.FeatureBox, "u-margin-bottom-med"].join(" ")}>
           <i
             className={[classes.FeatureBoxIcon, "fa", "fa-chart-line"].join(
               " "
@@ -51,9 +47,7 @@ const features = () => {
             points the following week.
           </p>
         </div>
-        <div
-          className={[classes.FeatureBox, "u-margin-bottom-small"].join(" ")}
-        >
+        <div className={[classes.FeatureBox, "u-margin-bottom-med"].join(" ")}>
           <i
             className={[classes.FeatureBoxIcon, "far", "fa-clock"].join(" ")}
           />
@@ -70,9 +64,7 @@ const features = () => {
             you were striving for.
           </p>
         </div>
-        <div
-          className={[classes.FeatureBox, "u-margin-bottom-small"].join(" ")}
-        >
+        <div className={[classes.FeatureBox, "u-margin-bottom-med"].join(" ")}>
           <i
             className={[classes.FeatureBoxIcon, "fa", "fa-trophy"].join(" ")}
           />

@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/authActions";
+import { customAlerts } from "../../actions/alertActions";
 
+import Alert from "../../components/Alert/Alert";
 import Login from "../../components/Static/Login/Login";
 import Header from "../../components/Static/Header/Header";
 import Features from "../../components/Static/Features/Features";
@@ -27,14 +29,21 @@ class Landing extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props);
     this.setState({
       isMobile: window.innerWidth < 770
     });
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/dashboard");
+    } else if (!prevProps.auth.registerFail && this.props.auth.registerFail) {
+      this.setState({
+        email: "",
+        password: "",
+        confirm_password: ""
+      });
     }
   }
 
@@ -65,11 +74,24 @@ class Landing extends Component {
 
   submitRegister = e => {
     e.preventDefault();
+    const { first_name, last_name, email, password } = this.state;
+
+    if (first_name.length === 0 || last_name.length === 0) {
+      const payload = {
+        data: ["Some fields cannot be blank"]
+      };
+      console.log(this.props);
+      console.log(customAlerts());
+      customAlerts(payload);
+
+      return false;
+    }
+
     const userData = {
-      first_name: this.state.first_name,
-      last_name: this.state.last_name,
-      email: this.state.email,
-      password: this.state.password
+      first_name: first_name,
+      last_name: last_name,
+      email: email,
+      password: password
     };
 
     console.log(userData);
@@ -125,6 +147,7 @@ class Landing extends Component {
     if (!isLoading) {
       content = (
         <div>
+          <Alert />
           <Login />
           <Header
             email={email}
@@ -164,6 +187,7 @@ class Landing extends Component {
 
 Landing.propTypes = {
   registerUser: PropTypes.func.isRequired,
+  customAlerts: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };
 
@@ -173,5 +197,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { registerUser }
+  { registerUser, customAlerts }
 )(Landing);

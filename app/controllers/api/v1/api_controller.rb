@@ -12,8 +12,8 @@ module Api::V1
         protected
 
         def render_unauthorized(message)
-            errors = { errors: { detail: message } }
-            render json: errors, status: :unauthorized
+            data = [ message ]
+            render json: data, status: :unauthorized
         end
 
         private

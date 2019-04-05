@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import { logoutUser } from "../../actions/authActions";
 import { closeCategoriesBox } from "../../actions/goalActions";
+import Alert from "../../components/Alert/Alert";
 import Navigation from "../../components/Navigation/Navigation";
 import ToDo from "../../components/ToDo/ToDo";
 import Analytics from "../../components/Analytics/Analytics";
@@ -48,6 +49,7 @@ class Dashboard extends Component {
     return (
       <div>
         <Navigation />
+        <Alert />
         {backDrop}
         <h1>Dashboard</h1>
         <button type="button" onClick={logoutUser}>
@@ -86,13 +88,15 @@ Dashboard.propTypes = {
   auth: PropTypes.object.isRequired,
   goalToCategorise: PropTypes.object.isRequired,
   displayCategories: PropTypes.bool.isRequired,
-  closeCategoriesBox: PropTypes.func.isRequired
+  closeCategoriesBox: PropTypes.func.isRequired,
+  alert: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
   goalToCategorise: state.goal.goalToCategorise,
-  displayCategories: state.goal.displayCategories
+  displayCategories: state.goal.displayCategories,
+  alert: state.alert
 });
 
 export default connect(

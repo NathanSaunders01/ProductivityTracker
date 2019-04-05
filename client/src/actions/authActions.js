@@ -2,11 +2,13 @@ import axios from "axios";
 import Auth from "../utils/Auth";
 import setAuthToken from "../utils/setAuthToken";
 import {
-  LOAD_CURRENT_USER,
-  LOAD_REGISTER_USER,
-  LOAD_LOGIN_USER,
+  LOAD_USER,
+  LOGIN_FAIL,
+  REGISTER_FAIL,
   SET_CURRENT_USER,
-  GET_ERRORS,
+  RESET_AUTH,
+  GET_ALERTS,
+  CLEAR_ALERTS,
   SET_GOALS,
   SET_ACTIVITIES,
   SET_CATEGORIES,
@@ -16,8 +18,8 @@ import {
 // Register User
 export const registerUser = userData => dispatch => {
   dispatch({
-    type: LOAD_REGISTER_USER,
-    payload: {}
+    type: LOAD_USER,
+    payload: "register"
   });
   axios
     .post("/api/v1/signup", { user: userData })
@@ -35,18 +37,27 @@ export const registerUser = userData => dispatch => {
       dispatch(setCurrentUser(user));
     })
     .catch(err => {
-      console.log(err.response.data);
+      console.log(err.response);
       dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
+        type: GET_ALERTS,
+        payload: err.response
       });
+      dispatch({
+        type: REGISTER_FAIL
+      });
+      dispatch({
+        type: RESET_AUTH
+      });
+      setTimeout(() => {
+        dispatch({ type: CLEAR_ALERTS });
+      }, 5000);
     });
 };
 
 export const loadCurrentUser = () => {
   return {
-    type: LOAD_CURRENT_USER,
-    payload: {}
+    type: LOAD_USER,
+    payload: "load"
   };
 };
 
@@ -76,12 +87,16 @@ export const getCurrentUser = token => dispatch => {
         payload: res.data
       });
     })
-    .catch(err =>
+    .catch(err => {
+      console.log(err.response);
       dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
+        type: GET_ALERTS,
+        payload: err.response
+      });
+      setTimeout(() => {
+        dispatch({ type: CLEAR_ALERTS });
+      }, 5000);
+    });
 };
 
 // Set logged in user and their goals
@@ -95,8 +110,8 @@ export const setCurrentUser = data => {
 // Login user
 export const loginUser = userData => dispatch => {
   dispatch({
-    type: LOAD_LOGIN_USER,
-    payload: {}
+    type: LOAD_USER,
+    payload: "login"
   });
   axios
     .post("/api/v1/login", { user: userData })
@@ -134,12 +149,22 @@ export const loginUser = userData => dispatch => {
         payload: res.data
       });
     })
-    .catch(err =>
+    .catch(err => {
+      console.log(err.response);
       dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
+        type: GET_ALERTS,
+        payload: err.response
+      });
+      dispatch({
+        type: LOGIN_FAIL
+      });
+      dispatch({
+        type: RESET_AUTH
+      });
+      setTimeout(() => {
+        dispatch({ type: CLEAR_ALERTS });
+      }, 5000);
+    });
 };
 
 // Logout user
@@ -171,10 +196,14 @@ export const logoutUser = () => dispatch => {
         payload: { rewardList: [] }
       });
     })
-    .catch(err =>
+    .catch(err => {
+      console.log(err.response);
       dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
+        type: GET_ALERTS,
+        payload: err.response
+      });
+      setTimeout(() => {
+        dispatch({ type: CLEAR_ALERTS });
+      }, 5000);
+    });
 };

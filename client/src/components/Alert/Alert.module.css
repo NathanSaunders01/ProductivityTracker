@@ -1,0 +1,36 @@
+.DefaultAlert {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 80px;
+  z-index: 1200;
+  background-color: white;
+  transition: all 0.75s;
+}
+
+.Content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  padding: 0 30px;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+}
+
+.Content p {
+  font-size: 16px;
+  opacity: 0.6;
+}
+
+.Content div {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border-width: 4px;
+  border-style: solid;
+}

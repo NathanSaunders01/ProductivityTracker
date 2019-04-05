@@ -3,7 +3,7 @@ import React from "react";
 import classes from "./Header.module.css";
 import Login from "../Login/Login";
 import Nature from "../../../assets/images/nature.jpg";
-import LineCrown from "../../../assets/images/logo_line_crown.png";
+import LineCrown from "../../../assets/images/logo_full_crown.png";
 
 const header = ({
   switchLoginForm,
@@ -48,14 +48,15 @@ const header = ({
           />
         </div>
       </div>
-      <div className={classes.HeaderLogoBox}>
-        <img
-          src={LineCrown}
-          className={[classes.HeaderLogo, classes.LogoAnimated].join(" ")}
-          alt="Meritokracy crown logo"
-        />
-      </div>
+
       <div className={classes.HeaderTextBox}>
+        <div className={classes.HeaderLogoBox}>
+          <img
+            src={LineCrown}
+            className={[classes.HeaderLogo, classes.LogoAnimated].join(" ")}
+            alt="Meritokracy crown logo"
+          />
+        </div>
         <h1 className={classes.HeadingPrimary}>
           <span className={classes.HeadingPrimaryMain}>Meritokracy</span>
           <span className={classes.HeadingPrimarySub}>
@@ -72,9 +73,9 @@ const header = ({
 
         <div className={classes.HeaderSmall}>
           <span>manage</span>
-          <span>motivate</span>
-          <span>master</span>
+          <span>motive</span>
           <span>merit</span>
+          <span>master</span>
         </div>
       </div>
     </header>

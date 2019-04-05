@@ -2,7 +2,9 @@ import axios from "axios";
 import {
   ADD_CATEGORY,
   REMOVE_CATEGORY,
-  REMOVE_CATEGORY_FROM_GOALS
+  REMOVE_CATEGORY_FROM_GOALS,
+  GET_ALERTS,
+  CLEAR_ALERTS
 } from "./types";
 
 // Add category
@@ -17,7 +19,14 @@ export const addCategory = categoryData => dispatch => {
       });
     })
     .catch(err => {
-      console.log(err.response.data);
+      console.log(err.response);
+      dispatch({
+        type: GET_ALERTS,
+        payload: err.response
+      });
+      setTimeout(() => {
+        dispatch({ type: CLEAR_ALERTS });
+      }, 5000);
     });
 };
 
@@ -37,6 +46,13 @@ export const removeCategory = categoryData => dispatch => {
       });
     })
     .catch(err => {
-      console.log(err.response.data);
+      console.log(err.response);
+      dispatch({
+        type: GET_ALERTS,
+        payload: err.response
+      });
+      setTimeout(() => {
+        dispatch({ type: CLEAR_ALERTS });
+      }, 5000);
     });
 };

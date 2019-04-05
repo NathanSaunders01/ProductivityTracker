@@ -1,8 +1,9 @@
 import {
   SET_CURRENT_USER,
-  LOAD_CURRENT_USER,
-  LOAD_REGISTER_USER,
-  LOAD_LOGIN_USER
+  LOAD_USER,
+  REGISTER_FAIL,
+  LOGIN_FAIL,
+  RESET_AUTH
 } from "../actions/types";
 
 const initialState = {
@@ -10,25 +11,19 @@ const initialState = {
   isRegistering: false,
   isLoggingIn: false,
   isAuthenticated: false,
+  loginFail: false,
+  registerFail: false,
   user: {}
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case LOAD_LOGIN_USER:
+    case LOAD_USER:
       return {
         ...state,
-        isLoggingIn: true
-      };
-    case LOAD_REGISTER_USER:
-      return {
-        ...state,
-        isRegistering: true
-      };
-    case LOAD_CURRENT_USER:
-      return {
-        ...state,
-        isLoading: true
+        isLoggingIn: action.payload === "login",
+        isRegistering: action.payload === "register",
+        isLoading: action.payload === "load"
       };
     case SET_CURRENT_USER:
       return {
@@ -40,6 +35,22 @@ export default function(state = initialState, action) {
             ? true
             : false,
         user: action.payload,
+        isLoading: false,
+        isRegistering: false,
+        isLoggingIn: false
+      };
+    case LOGIN_FAIL:
+      return {
+        ...state,
+        loginFail: true
+      };
+    case REGISTER_FAIL:
+      return {
+        ...state,
+        registerFail: true
+      };
+    case RESET_AUTH:
+      return {
         isLoading: false,
         isRegistering: false,
         isLoggingIn: false

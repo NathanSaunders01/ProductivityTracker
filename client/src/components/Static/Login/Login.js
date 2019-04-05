@@ -17,6 +17,14 @@ class Login extends Component {
     };
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevProps.auth.loginFail && this.props.auth.loginFail) {
+      this.setState({
+        password: ""
+      });
+    }
+  }
+
   handleTextChange = e => {
     const name = e.target.name;
     const val = e.target.value;
@@ -78,7 +86,7 @@ class Login extends Component {
           isFocused={focusedEl === "password"}
         />
         <button
-          type="button"
+          type="submit"
           className={classes.LoginButton}
           onClick={submitLogin}
           disabled={isLoggingIn}

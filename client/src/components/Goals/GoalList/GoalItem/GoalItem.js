@@ -11,6 +11,7 @@ import {
 import classes from "./GoalItem.module.css";
 import Crown from "../../../../assets/images/logo_full_crown.png";
 import CategoryButton from "../../../UI/CategoryButton/CategoryButton";
+import ProgressBar from "../../../UI/ProgressBar/ProgressBar";
 
 class GoalItem extends Component {
   constructor() {
@@ -102,10 +103,7 @@ class GoalItem extends Component {
           {crownIcon}
         </span>
         <div className={classes.Frequency} ref={this.divWrapper}>
-          <span
-            className={classes.FrequencyBar}
-            style={{ width: `${percentage}%` }}
-          />
+          <ProgressBar width={percentage} color="red" />
           <span
             className={classes.FrequencyText}
             ref={this.spanText}
